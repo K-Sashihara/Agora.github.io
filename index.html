@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Roboto+Mono&display=swap');
+        body { font-family: 'Noto Serif JP', serif; }
+        .mono { font-family: 'Roboto Mono', monospace; }
+        .hidden { display: none; }
+        .active-tab { border-bottom: 2px solid #333; font-weight: bold; }
+        
+        /* 言語切り替え用の制御 */
+        html[lang="en"] .lang-ja { display: none; }
+        html[lang="ja"] .lang-en { display: none; }
+        
+        .lang-btn-active { font-weight: bold; text-decoration: underline; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 leading-relaxed overflow-y-scroll">
+
+    <!-- Header -->
+    <header class="max-w-4xl mx-auto pt-12 px-6">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-xl font-light tracking-widest uppercase">Keishi Sashihara's Portfolio</h1>
+            
+            <!-- Language Switcher -->
+            <div class="text-xs mono space-x-2">
+                <button onclick="setLanguage('ja')" id="btn-ja" class="lang-btn-active hover:text-gray-500">JP</button>
+                <span class="text-gray-300">/</span>
+                <button onclick="setLanguage('en')" id="btn-en" class="hover:text-gray-500">EN</button>
+            </div>
+        </div>
+        
+        <!-- Main Tabs -->
+        <nav class="flex space-x-8 border-b border-gray-100 text-sm mb-12">
+            <button onclick="switchTab('about')" id="tab-btn-about" class="pb-2 active-tab transition-all">
+                <span class="lang-ja">自己紹介</span><span class="lang-en">About</span>
+            </button>
+            <button onclick="switchTab('works')" id="tab-btn-works" class="pb-2 transition-all">
+                <span class="lang-ja">記事</span><span class="lang-en">Works</span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 pb-20">
+        
+        <!-- About Section -->
+        <section id="content-about">
+            <div class="max-w-2xl">
+                <div class="lang-ja">
+                    <h2 class="text-xl mb-4 font-bold">自己紹介</h2>
+                    <p class="mb-6 text-gray-700">名前 &emsp; 指原 啓志</p>
+                    <p class="mb-6 text-gray-700">所属 &emsp; 東北大学 理学部 物理学科 3年 (固体統計物理学講座 配属予定)</p>
+                </div>
+                <div class="lang-en">
+                    <h2 class="text-xl mb-4 font-bold">Profile</h2>
+                    <p class="mb-6 text-gray-700">Name: Keishi Sashihara</p>
+                    <p class="mb-6 text-gray-700">Affiliation: Department of Physics, Faculty of Science, Tohoku University (Assigned to Solid State Statistical Physics Lab)</p>
+                </div>
+
+                <div class="lang-ja">
+                    <h2 class="text-xl mb-4 font-bold">興味</h2>
+                    <p class="mb-6 text-gray-700">
+                        物性物理学に興味があります。特に最近は量子コンピュータや情報理論に興味があります。
+                    </p>
+                </div>
+                <div class="lang-en">
+                    <h2 class="text-xl mb-4 font-bold">Interested</h2>
+                    <p class="mb-6 text-gray-700">I am interested in condensed matter physics. Recently, I have been interested in quantum computers and information theory.</p>
+                </div>
+
+                <div class="lang-ja">
+                    <h2 class="text-xl mb-4 font-bold">アイデア・問題</h2>
+                    <ul class="list-disc list-inside mb-6 text-gray-700">
+                        <li>量子コンピュータのノイズ耐性を向上させる新しいエラー訂正コードの開発</li>
+                        <li>量子情報理論に基づく新しい量子アルゴリズムの設計</li>
+                    </ul>
+                </div>
+                <div class="lang-en">
+                    <h2 class="text-xl mb-4 font-bold">Ideas / Problems</h2>
+                    <ul class="list-disc list-inside mb-6 text-gray-700">
+                        <li>Development of new error correction codes to improve noise resistance of quantum computers</li>
+                        <li>Design of new quantum algorithms based on quantum information theory</li>
+                    </ul>
+                </div>
+
+
+                <div class="lang-ja">
+                    <h2 class="text-xl mb-4 font-bold">連絡先</h2>
+                    <p class="mb-6 text-gray-700">
+                        Email: <a href="mailto:ksphysmath@gmail.com" class="text-blue-600 hover:underline">メールを送る</a>
+                    </p>
+                </div>
+                <div class="lang-en">
+                    <h2 class="text-xl mb-4 font-bold">Contact</h2>
+                    <p class="mb-6 text-gray-700">Email: <a href="mailto:ksphysmath@gmail.com" class="text-blue-600 hover:underline">send an email</a></p>
+                </div>
+
+<!--                 <h3 class="text-lg mb-2 font-bold">Skills</h3>
+                <ul class="space-y-2 text-gray-600 text-sm mono">
+                    <li>Python (NumPy, SciPy), Fortran, LaTeX</li>
+                </ul> -->
+            </div>
+        </section>
+
+        <!-- Works Section -->
+        <section id="content-works" class="hidden">
+            <!-- Tag Filter -->
+            <div class="flex flex-wrap gap-2 mb-10">
+                <button onclick="filterWorks('all')" class="tag-btn bg-gray-900 text-white px-3 py-1 text-[10px] rounded-full">ALL</button>
+                <button onclick="filterWorks('physics')" class="tag-btn border border-gray-300 px-3 py-1 text-[10px] rounded-full">PHYSICS</button>
+                <button onclick="filterWorks('math')" class="tag-btn border border-gray-300 px-3 py-1 text-[10px] rounded-full">MATHEMATICS</button>
+                <button onclick="filterWorks('simulation')" class="tag-btn border border-gray-300 px-3 py-1 text-[10px] rounded-full">SIMULATION</button>
+                <button onclick="filterWorks('linear-algebra')" class="tag-btn border border-gray-300 px-3 py-1 text-[10px] rounded-full">LINEAR ALGEBRA</button>
+            </div>
+
+            <!-- Works Grid -->
+            <div class="grid md:grid-cols-2 gap-8"> <!-- <ー消さないで！！ -->
+
+                <!-- Snippet: Work Item Card -->
+                <article class="work-item" data-tags="simulation physics">
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest mono">Simulation / Physics</span>
+                    <h3 class="text-lg font-bold mb-2 mt-1">
+                        <span class="lang-ja">有限導体に誘導される電荷のシミュレーション</span>
+                        <span class="lang-en">Simulation of Induced Charges in Finite Conductors</span>
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        <span class="lang-ja">点電荷によって有限導体に誘導される電荷をシミュレーションする。</span>
+                        <span class="lang-en">Simulating induced charges in finite conductors by point charges.</span>
+                    </p>
+                    <a href="article/induced_charge.html" class="text-xs border-b border-gray-900 pb-1 hover:text-gray-500 transition">
+                        <span class="lang-ja">記事を読む</span>
+                        <span class="lang-en">Read Article</span>
+                    </a>
+                </article>
+
+                <!-- Snippet: Work Item Card -->
+                <article class="work-item" data-tags="math linear-algebra">
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest mono">Mathematics / Linear Algebra</span>
+                    <h3 class="text-lg font-bold mb-2 mt-1">
+                        <span class="lang-ja">二次形式を考える</span>
+                        <span class="lang-en">Understanding Quadratic Forms</span>
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        <span class="lang-ja">平行移動を含んだ2次形式の処理を考える。</span>
+                        <span class="lang-en">Trying to understand how to analyze quadratic forms with parallel movement</span>
+                    </p>
+                    <a href="article/Affine.html" class="text-xs border-b border-gray-900 pb-1 hover:text-gray-500 transition">
+                        <span class="lang-ja">記事を読む</span>
+                        <span class="lang-en">Read Article</span>
+                    </a>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 言語切り替え
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            
+            // ボタンの見た目更新
+            if (lang === 'ja') {
+                document.getElementById('btn-ja').classList.add('lang-btn-active');
+                document.getElementById('btn-en').classList.remove('lang-btn-active');
+            } else {
+                document.getElementById('btn-ja').classList.remove('lang-btn-active');
+                document.getElementById('btn-en').classList.add('lang-btn-active');
+            }
+        }
+
+        // タブ切り替え
+        function switchTab(tabName) {
+            document.getElementById('content-about').classList.add('hidden');
+            document.getElementById('content-works').classList.add('hidden');
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+
+            document.getElementById('tab-btn-about').classList.remove('active-tab');
+            document.getElementById('tab-btn-works').classList.remove('active-tab');
+            document.getElementById('tab-btn-' + tabName).classList.add('active-tab');
+        }
+
+        // 絞り込み
+        function filterWorks(tag) {
+            const items = document.querySelectorAll('.work-item');
+            items.forEach(item => {
+                const tags = item.getAttribute('data-tags');
+                if (tag === 'all' || tags.includes(tag)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article | Physics Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Roboto+Mono&display=swap');
+        body { font-family: 'Noto Serif JP', serif; } .mono { font-family: 'Roboto Mono', monospace; }
+        html[lang="en"] .lang-ja { display: none; } html[lang="ja"] .lang-en { display: none; }
+        .lang-btn-active { font-weight: bold; text-decoration: underline; }
+        article p { margin-bottom: 1.5rem; color: #374151; line-height: 1.8; }
+        .math-block { background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0; overflow-x: auto; }
+        code { font-family: 'Roboto Mono', monospace; background: #1f2937; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+        pre { background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin: 2rem 0; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Header -->
+    <header class="max-w-3xl mx-auto pt-12 px-6">
+        <div class="flex justify-between items-center mb-12">
+            <a href="../index.html" class="text-xs uppercase tracking-widest border-b border-gray-900 pb-1 hover:text-gray-500 transition">← Back to Portfolio</a>
+            <div class="text-xs mono space-x-2">
+                <button onclick="setLanguage('ja')" id="btn-ja" class="lang-btn-active">JP</button>
+                <span class="text-gray-300">/</span>
+                <button onclick="setLanguage('en')" id="btn-en">EN</button>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-6 pb-24">
+        <!-- ここに記事コンテンツを追加 -->
+        <!-- Snippet: Article Header -->
+        <header class="mb-16">
+            <div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 mono">MATHEMATICS LINEAR ALGEBRA</div>
+            <h1 class="text-3xl font-bold mb-6 leading-tight">
+                <span class="lang-ja">二次形式を考える</span>
+                <span class="lang-en">Understanding Quadratic Forms</span>
+            </h1>
+            <div class="text-sm text-gray-500 mono">Date: 2026.02.24</div>
+        </header>
+        <article>
+            <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                <span class="lang-ja">はじめに</span><span class="lang-en">Introduction</span>
+            </h2>
+
+                <p class="lang-ja">この記事が最初の私の投稿です。ここでは二次形式、特に平行移動を伴った二次形式について考えてみたので、それをまとめます。</p>
+                <p class="lang-en">This is my first article. Here, I explore quadratic forms, especially those involving translations, and summarize my findings.</p>
+
+                <p class="lang-ja">最初に以下のような二次式を考えてみましょう。</p>
+                <p class="lang-en">Let's consider the following quadratic form:</p>
+                <div class="math-block">
+                    \[
+                    x^2 + xy + y^2 = 1
+                    \]
+                </div>
+
+                <p class="lang-ja">この二次形式については、次のように変形できることがわかります。</p>
+                <p class="lang-en">For this quadratic form, we can rewrite it in a more convenient form:</p>
+                <div class="math-block">
+                    \[
+                    \begin{bmatrix} x & y \end{bmatrix} \begin{bmatrix} 1 & 1/2 \\ 1/2 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = 1
+                    \]
+                </div>
+
+                <p class="lang-ja">さて、ここで登場した実対称行列に対して対角化を施すと、以下のように変形できます。</p>
+                <p class="lang-en">When we diagonalize the symmetric matrix that appeared, we can rewrite it as follows:</p>
+
+                <div class="math-block">
+                    \[
+                    \begin{bmatrix} x & y \end{bmatrix} \begin{bmatrix} 1/\sqrt{2} & 1/\sqrt{2} \\ -1/\sqrt{2} & 1/\sqrt{2} \end{bmatrix} 
+                    \begin{bmatrix} 1/2 & 0 \\ 0 & 3/2 \end{bmatrix}
+                    \begin{bmatrix} 1/\sqrt{2} & 1/\sqrt{2} \\ - 1/\sqrt{2} & 1/\sqrt{2} \end{bmatrix}^{-1} \begin{bmatrix} x \\ y \end{bmatrix} = 1
+                    \]
+                </div>
+
+                <p class="lang-ja">この結果は、\( \begin{bmatrix} 1/\sqrt{2} & 1/\sqrt{2} \\ - 1/\sqrt{2} & 1/\sqrt{2} \end{bmatrix}  = \begin{bmatrix} \cos(\pi/4) & \sin(\pi/4) \\ -\sin(\pi/4) & \cos(\pi/4) \end{bmatrix} \)であることを考えると、元の二次形式 \( x^2 + xy + y^2 = 1 \) は、楕円 \( \dfrac{x^2}{2} + \dfrac{y^2}{2/3} = 1 \) を\(-\dfrac{\pi}{4}\)回転させたものであることがわかります。</p>
+                <p class="lang-en">This result shows that the original quadratic form \( x^2 + xy + y^2 = 1 \) is an ellipse \( \dfrac{x^2}{2} + \dfrac{y^2}{2/3} = 1 \) rotated by \(-\dfrac{\pi}{4}\).</p>
+
+                <p class="lang-ja">このように行列の対角化を用いると、与えられた二次形式の具体的な形を理解しやすくなります。</p>
+                <p class="lang-en">As I showed above, using matrix diagonalization makes it easier to understand the specific form of a given quadratic form.</p>
+
+                <p class="lang-ja">しかし、以下のような二次形式の場合にはどうでしょうか？</p>
+                <p class="lang-en">However, what about the following quadratic form?</p>
+
+                <div class="math-block">
+                    \[ x^2 + xy + y^2 - 2x - y = 0 \]
+                </div>
+
+                <p class="lang-ja">この二次式はうまく行列に落とし込むことができず、このままでは手が進みません。結論を言うと、この二次式は先ほどの二次形式を\( x \)軸方向に1だけ平行移動したものです。実際、先ほどの二次形式\( x^2 + xy + y^2 = 1 \)を\( x \)軸方向に1だけ平行移動したものは、\( (x-1)^2 + (x-1)y + y^2 = 1 \)となり、展開すると\( x^2 + xy + y^2 - 2x - y = 0 \)となります。たったこれだけの操作にも関わらず、行列を用いた解析ができなくなるのは気に入りません。そこで、ここからはなんとかして、このような平行移動を含む二次形式を行列で扱えるようにしていきます。</p>
+                <p class="lang-en">This quadratic form is difficult to express in matrix form, and it's hard to make progress without further manipulation. In conclusion, this quadratic form is the previous one translated by 1 unit in the \( x \) direction. You can check that this is the case by expanding \( (x-1)^2 + (x-1)y + y^2 = 1 \). To handle such forms with translations, we will extend our matrix approach in a later section.</p>
+
+            <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                <span class="lang-ja">次元の拡張</span><span class="lang-en">Dimension Extension</span>
+            </h2>
+
+                <p class="lang-ja">二変数の二次形式は一般的に、実数\( a, b, c, d, e, f \)を用いて、\( ax^2 + bxy + cy^2 + dx + ey + f = 0 \)と表されます。しかし先ほどの例でも明らかなように、一次の項や定数項が含まれる場合、うまく行列を用いて表現できません。そこで、発想を拡張させて、座標のベクトル \( \begin{bmatrix} x \\ y \end{bmatrix} \) に"定数方向"のベクトルを加えた、\( \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} \) を導入してみます。</p>
+                <p class="lang-en">Generally, a quadratic form in two variables is expressed as \( ax^2 + bxy + cy^2 + dx + ey + f = 0 \) for real numbers \( a, b, c, d, e, f \). However, as we saw in the previous example, when linear and constant terms are present, it's difficult to represent them using matrices. To address this issue, we extend our approach by introducing a vector \( \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} \) that includes "a constant direction" vector in addition to the coordinate vector \( \begin{bmatrix} x \\ y \end{bmatrix} \).</p>
+
+                <p class="lang-ja">すると、二次形式\( ax^2 + bxy + cy^2 + dx + ey + f = 0 \)は、以下のように表せます。</p>
+                <p class="lang-en">Then, the quadratic form \( ax^2 + bxy + cy^2 + dx + ey + f = 0 \) can be expressed as:</p>
+                <div class="math-block">
+                    \[ \begin{bmatrix} x & y & 1 \end{bmatrix} \begin{bmatrix} a & b/2 & d/2 \\ b/2 & c & e/2 \\ d/2 & e/2 & f \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} = 0 \]
+                </div>
+
+                <p class="lang-ja">これはちょうど、非斉次の微分方程式や漸化式を行列を用いて考えるときのテクニックと同じですね。さて、ここで出てきた\( 3 \times 3 \)の行列を\(\mathcal{A}\)と表すことにし、さらに、この行列を以下のように4分割します。</p>
+                <p class="lang-en">This is the same technique used when considering non-homogeneous differential equations or recurrence relations using matrices. Let's denote this \( 3 \times 3 \) matrix as \(\mathcal{A}\), and further partition it as follows:</p>
+
+                <div class="math-block">
+                    \[ \mathcal{A}  
+                    = \left[
+                        \begin{array}{cc:c}
+                        a & b/2 & d/2 \\ 
+                        b/2 & c & e/2 \\ 
+                        \hdashline 
+                        d/2 & e/2 & f 
+                        \end{array}
+                    \right] 
+                    \equiv \left[
+                        \begin{array}{c:c}
+                        A & \mathbf{b} \\ 
+                        \hdashline 
+                        \mathbf{b}^T & f 
+                        \end{array}
+                    \right]
+                    \]
+                </div>
+
+            <p class="lang-ja">このように三次元のベクトルを導入することで、平行移動を含む二次形式を行列で表現できるようになりました。</p>
+            <p class="lang-en">By introducing a three-dimensional vector, we can now represent quadratic forms that include translations using matrices.</p>
+
+            <p class="lang-ja">なお、この記事では二変数の二次形式のみを扱っていきますが、変数の数が増えても以降の議論は同様に拡張できます。</p>
+            <p class="lang-en">Note that this article only deals with quadratic forms in two variables, but the subsequent discussion can be extended similarly to forms with more variables.</p>
+
+        <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+            <span class="lang-ja">アフィン変換</span><span class="lang-en">Affine Transformations</span>
+        </h2>
+
+            <p class="lang-ja">この節では、アフィン変換について説明します。アフィン変換は、線形変換と平行移動を組み合わせた変換であり、幾何学的な変形を表現するのに非常に有用です。最終的には前節で導入した行列\(\mathcal{A}\)に対してもこのアフィン変換を適用することで、二次形式を変換することが目標です。しかし、その前にアフィン変換についてもう少し詳しくみてみます。</p>
+            <p class="lang-en">This section explains affine transformations. An affine transformation is a combination of linear transformations and translations, and is very useful for representing geometric transformations. The goal is to apply affine transformations to the matrix \(\mathcal{A}\) introduced in the previous section to transform quadratic forms. However, before proceeding, let's examine affine transformations in more detail.</p>
+
+            <p class="lang-ja">まず、基底が回転移動と平行移動の両方をした場合を考えます。具体的には回転行列\(R\)で表される回転を施された後にベクトル\(\mathbf{t}\)だけ平行移動したとします。すなわち以下のような変換です。</p>
+            <p class="lang-en">First, consider a case where the basis is rotated and translated. Specifically, suppose we first apply a rotation represented by the rotation matrix \(R\), and then translate by the vector \(\mathbf{t}\). This corresponds to the following transformation:</p>
+
+            <div class="math-block">
+                \[ \begin{bmatrix} \mathbf{e_1'} & \mathbf{e_2'} \end{bmatrix} = \begin{bmatrix} \mathbf{e_1} & \mathbf{e_2} \end{bmatrix} R + \begin{bmatrix} \mathbf{t} & \mathbf{t} \end{bmatrix} \]
+            </div>
+
+            <p class="lang-ja">この変換式についても、前節の次元拡大のテクニックを用いることができるでしょう。少しみにくくなってしまいましたが、以下の式はこの変換式の次元を拡大し\(3\times 3\)行列の積にしたものです。</p>
+            <p class="lang-en">The same technique can be applied to this transformation equation. Although it looks a bit more complex, the following equation is the result of extending the dimension of this transformation equation to a \(3\times 3\) matrix product.</p>
+
+            <div class="math-block">
+                \[ \left[
+                        \begin{array}{cc:c}
+                        \mathbf{e_1'} & \mathbf{e_2'} & \mathbf{t} \\ 
+                        \hdashline 
+                        0 & 0 & 1 
+                        \end{array}
+                    \right] 
+                    = 
+                    \left[
+                    \begin{array}{cc:c}
+                    \mathbf{e_1} & \mathbf{e_2} & \mathbf{0} \\ 
+                    \hdashline 
+                    0 & 0 & 1 
+                    \end{array}
+                    \right] 
+                    \left[
+                        \begin{array}{c:c}
+                        R & \mathbf{t} \\ 
+                        \hdashline 
+                        \mathbf{0}^T & 1
+                        \end{array}
+                    \right] \]
+            </div>
+
+            <p class="lang-ja">このように考えると、行列\(\left[
+                        \begin{array}{c:c}
+                        R & \mathbf{t} \\ 
+                        \hdashline 
+                        \mathbf{0}^T & 1
+                        \end{array}
+                    \right]\) はまさに基底取り換え行列としてみることができます。そこで、これを\( \mathcal{P}\) と表すことにします。</p>
+            <p class="lang-en">This matrix, \(\left[
+                        \begin{array}{c:c}
+                        R & \mathbf{t} \\ 
+                        \hdashline 
+                        \mathbf{0}^T & 1
+                        \end{array}
+                    \right] \) , is precisely a change-of-basis matrix. We denote it as \( \mathcal{P}\).</p>
+
+            <p class="lang-ja">基底取り換え行列がわかってしまえば、基底取り換え行列と座標の変換則から、新座標\(\mathbf{x'}\)は旧座標\(\mathbf{x}\)を用いて \( \begin{bmatrix} \mathbf{x'} \\ 1 \end{bmatrix} = \mathcal{P}^{-1} \begin{bmatrix} \mathbf{x} \\ 1 \end{bmatrix} \) と表すことができます。ここまできたら、うまく基底の取り替えを行い、\( \mathcal{A}\)の対角化ができないかを考えるのは自然なことでしょう!</p>
+            <p class="lang-en">If the change-of-basis matrix is known, then from the change-of-basis matrix and the coordinate transformation rule, the new coordinates \(\mathbf{x'}\) can be expressed in terms of the old coordinates \(\mathbf{x}\) as \( \begin{bmatrix} \mathbf{x'} \\ 1 \end{bmatrix} = \mathcal{P}^{-1} \begin{bmatrix} \mathbf{x} \\ 1 \end{bmatrix} \). Now, it is natural to consider whether we can diagonalize \( \mathcal{A}\) by choosing an appropriate change-of-basis matrix!</p>
+
+            <p class="lang-ja">ちなみに、\(\mathcal{P}\)は正則で、\( \mathcal{P}^{-1} = \left[
+                        \begin{array}{c:c}
+                        R^{-1} & -R^{-1} \mathbf{t} \\ 
+                        \hdashline 
+                        \mathbf{0}^T & 1
+                        \end{array}
+                    \right]\) と表すことができます。そもそも、\(\mathcal{P}\)が基底を回転して、平行移動させる変換だったので、逆変換は逆に平行移動させて、逆に回転させたものです。つまり、\(R\)は\(R^{-1}\)変えるだけでよく、さらに、平行移動ベクトル\(\mathbf{t}\)に関しては、新基底での移動だということに注意して、\(-R^{-1}\mathbf{t}\)に置き換えることで逆行列が得られます。</p>
+            <p class="lang-en"> By the way, \(\mathcal{P}\) is regular, \(\mathcal{P}^{-1} = \left[
+                        \begin{array}{c:c}
+                        R^{-1} & -R^{-1} \mathbf{t} \\ 
+                        \hdashline 
+                        \mathbf{0}^T & 1
+                        \end{array}
+                    \right]\). At the first glance, it may seem that the inverse of an affine transformation is not straightforward. However, it is simply the inverse of the rotation matrix and the negative of the translation vector transformed by the inverse rotation matrix.</p>
+
+        <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+            <span class="lang-ja">\( \mathcal{A}\)の対角化</span><span class="lang-en">Diagonalization of \( \mathcal{A}\)</span>
+        </h2>
+
+            <p class="lang-ja">さて、今一度ゴールを整理してみます。私たちの目標は新しい座標系のもと、そこでの座標ベクトル\( \begin{bmatrix} X \\ Y \\ 1 \end{bmatrix}\)を用いて、元の二次形式を対角行列\( \mathcal{L} \)で表すことです。すなわち以下のようなことです。</p>
+            <p class="lang-en">Let's restate our goal. Our objective is to express the original quadratic form in terms of the new coordinates \( \begin{bmatrix} X \\ Y \\ 1 \end{bmatrix}\) in a new coordinate system, using a diagonal matrix \( \mathcal{L}\). That is, we want to achieve the following:</p>
+
+            <div class="math-block">
+                \[ \begin{bmatrix} X & Y & 1 \end{bmatrix} \mathcal{L} \begin{bmatrix} X \\ Y \\ 1 \end{bmatrix}  = \begin{bmatrix} x & y & 1 \end{bmatrix} \mathcal{A} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} \]
+            </div>
+
+            <p class="lang-ja">ここに、\( \begin{bmatrix} X \\ Y \\ 1 \end{bmatrix} = \mathcal{P}^{-1} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}\) を代入することで、以下のような式が得られます。</p>
+            <p class="lang-en">Substituting \( \begin{bmatrix} X \\ Y \\ 1 \end{bmatrix} = \mathcal{P}^{-1} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}\) into the previous equation, we get:</p>
+
+            <div class="math-block">
+                \[ \mathcal{A} = (\mathcal{P}^{-1})^{T} \mathcal{L} \mathcal{P}^{-1} \]
+            </div>
+
+            <p class="lang-ja">ここで、対角行列\( \mathcal{L} \)が、変数部分と定数部分で\(\mathcal{L} = \left[ \begin{array}{c:c}
+                                \Lambda & \mathbf{0} \\ 
+                                \hdashline 
+                                \mathbf{0}^T & f'
+                                \end{array} \right ] \)
+                のように分割されているとします。もちろん、\(\Lambda\)は\(2 \times 2\)の対角行列であるとします。そして、具体的に\(\mathcal{P} = \left[
+                            \begin{array}{c:c}
+                            R & \mathbf{t} \\ 
+                            \hdashline 
+                            \mathbf{0}^T & 1
+                            \end{array}
+                        \right] \)を代入すると、少しの計算の後に以下のような式が得られます。</p>
+            <p class="lang-en">In terms of the diagonal matrix \(\mathcal{L}\), we have \(\mathcal{L} = \left[\begin{array}{c:c}
+                                \Lambda & \mathbf{0} \\ 
+                                \hdashline 
+                                \mathbf{0}^T & f'
+                                \end{array} \right ] \)
+                where \(\Lambda\) is a \(2 \times 2\) diagonal matrix. Then, substituing \(\mathcal{P} = \left[ \begin{array}{c:c}
+                            R & \mathbf{t} \\ 
+                            \hdashline 
+                            \mathbf{0}^T & 1
+                            \end{array} \right] \) into the previous equation, we get:</p>
+            
+            <div class="math-block">
+                \[ 
+                \begin{eqnarray}
+                    A &=& R \Lambda R^{-1} \\[1pt]
+                    \mathbf{b} &=& - A \mathbf{t} \\[1pt]
+                    f &=& f' + \mathbf{t}^T A \mathbf{t}
+                \end{eqnarray}
+                \]
+            </div>
+
+            <p class="lang-ja">第一式はまさに行列\(A\)の対角化そのものです。\(A\)はもちろん実対称行列なので、直行行列を用いて対角化できることは保証されており、この結果より\(\mathcal{A}\)が対角化できることが保証されます。回転の様子は\(A\)の固有ベクトルを並べた行列\(R\)によって表されます。そして、平行移動の方は第二式より、\( \mathbf{t}\)が求まります。</p>
+            <p class="lang-en">The first equation is simply the diagonalization of matrix \(A\). Since \(A\) is a real symmetric matrix, it is guaranteed to be diagonalizable using an orthogonal matrix. Therefore, we can guarantee that \(\mathcal{A}\) is diagonalizable. The rotation information is represented by the matrix \(R\) formed by arranging the eigenvectors of \(A\). The translation vector \(\mathbf{t}\) is determined from the second equation.</p>
+
+            <p class="lang-ja">それでは、ここまでの結果を使って、最初の二次形式\( x^2 + xy + y^2 - 2x - y = 0 \)を考えてみます。この二次形式は以下のように表せます。</p>
+            <p class="lang-en">Now, using the results above, let's consider the quadratic form \( x^2 + xy + y^2 - 2x - y = 0 \). This can be written in matrix form as:</p>
+
+            <div class="math-block">
+                \[ \begin{bmatrix} x & y & 1 \end{bmatrix} \begin{bmatrix} 1 & 1/2 & -1 \\ 1/2 & 1 & -1/2 \\ -1 & -1/2 & 0 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} = 0 \]
+            </div>
+            
+            <p class="lang-ja">これに対して、先ほどの結果を適用すると、少しややこしいですが、以下のように変形できます。</p>
+            <p class="lang-en">Using the results above, though it is a little complicated, we can transform the quadratic form as follows:</p>
+            
+            <div class="math-block">
+                \[ 
+                \begin{bmatrix} x & y & 1 \end{bmatrix} \begin{bmatrix} 1 & 1/2 & -1 \\ 1/2 & 1 & -1/2 \\ -1 & -1/2 & 0 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}
+                = \begin{bmatrix} x & y & 1 \end{bmatrix} \left ( \begin{bmatrix} \cos(\pi / 4) & \sin(\pi/4) & -1 \\ -\sin(\pi / 4) & \cos(\pi/4) & 0 \\ 0 & 0 & 1 \end{bmatrix}^{-1} \right)^T
+                \begin{bmatrix} 1/2 & 0 & 0 \\ 0 & 2/3 & 0 \\ 0 & 0 & -1 \end{bmatrix}
+                \begin{bmatrix} \cos(\pi / 4) & \sin(\pi/4) & -1 \\ -\sin(\pi / 4) & \cos(\pi/4) & 0 \\ 0 & 0 & 1 \end{bmatrix}^{-1}
+                \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}
+                =0
+                \]
+            </div>
+
+            <p class="lang-ja">この結果、二次形式\( x^2 + xy + y^2 - 2x - y = 0 \) は、基底を\(\dfrac{\pi}{4}\) 回転させたのち、\(x\)軸方向に\(-1\)、\(y\)軸方向に0だけ平行移動させた座標系で見ると、楕円 \( \dfrac{x^2}{2} + \dfrac{y^2}{2/3} = 1 \) と表せるということがわかりました。少し冗長に書きましたが、要は楕円\( \dfrac{x^2}{2} + \dfrac{y^2}{2/3} = 1 \)を\(-\dfrac{\pi}{4}\)回転させて、\(x\)軸方向に1だけ平行移動させたものということですね。これは結局、最初の目論み通りの結果です! このようにして二次形式を解析することができました。</p>
+            <p class="lang-en">This result shows that the quadratic form \( x^2 + xy + y^2 - 2x - y = 0 \) can be expressed as an ellipse \( \dfrac{x^2}{2} + \dfrac{y^2}{2/3} = 1 \) in a coordinate system rotated by \(\dfrac{\pi}{4}\) and translated by \(-1\) in the \(x\)-direction and \(0\) in the \(y\)-direction. This confirms our initial expectations! In this way, we have successfully analyzed the quadratic form.</p>
+
+        <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+            <span class="lang-ja">もう少し考える</span><span class="lang-en">Further Considerations</span>
+        </h2>
+
+            <p class="lang-ja">最後に、もう少し考察してみたいと思います。まず、二次形式といっても、楕円、双曲線、放物線の三種類があります。これらを区別するためには、二次形式の行列内の小行列であった\(A\)の固有値が重要であることはすぐにわかるでしょう。実際、二つの固有値が同符号であれば、楕円、異符号であれば双曲線、どちらかがゼロであれば放物線になります。固有値の積は元の行列の行列式に等しいので、\( |A| = \begin{vmatrix} a & b/2 \\ b/2 & c \end{vmatrix} = ac - \dfrac{b^2}{4} \) の値を調べることで、二次形式の種類を判別できます。しかし、これだけで種類を断定するのは不適切です。</p>
+            </p>
+            <p class="lang-en"> At the last, we would like to consider a bit more. As mentioned above, quadratic forms can be classified into three types: ellipse, hyperbola, and parabola. To distinguish between these types, the eigenvalues of the matrix \(A\) within the quadratic form are important. In fact, if both eigenvalues have the same sign, it is an ellipse; if they have different signs, it is a hyperbola; and if one of them is zero, it is a parabola. Since the product of eigenvalues equals the determinant of the original matrix, we can determine the type of quadratic form by examining the value of \( |A| = \begin{vmatrix} a & b/2 \\ b/2 & c \end{vmatrix} = ac - \dfrac{b^2}{4} \). However, determining the type solely based on this value is not sufficient.</p>
+
+            <p class="lang-ja">まず\(A\)が正則で、その固有値を\(\lambda_1, \lambda_2\)とすると、新しい座標系での二次形式は、\(\lambda_1 x'^2 + \lambda_2 y'^2 + f' = 0\) と表せます。そうすると、この式が楕円を表すためには、固有値\(\lambda_1, \lambda_2\)が同符号であり、\(f'\)がそれらとは異符号である必要があります。\(f' = 0\)の時はもちろん一点しか表せません。それに対し、双曲線になる条件として\(f'\)の符号が問題になることはないでしょう。しかし、これも\(f' = 0\)の時は、因数分解ができるため、双曲線というよりは交わる二直線になるでしょう。このように、実際の形を断定するためには、\(ac - \dfrac{b^2}{4}\)の値に加えて、\(f' = f - \mathbf{t}^T A \mathbf{t}\)の値も考慮する必要があります。</p>
+            <p class="lang-en">If \(A\) is invertible and its eigenvalues are \(\lambda_1, \lambda_2\), then in the new coordinate system, the quadratic form can be expressed as \(\lambda_1 x'^2 + \lambda_2 y'^2 + f' = 0\). For this equation to represent an ellipse, the eigenvalues \(\lambda_1, \lambda_2\) must have the same sign, and \(f'\) must have the opposite sign to them. If \(f' = 0\), the equation represents a single point. For a hyperbola, the sign of \(f'\) is not an issue, but if \(f' = 0\), the equation can be factored into two intersecting lines.As I mentioned above, it is important to consider both the value of \(ac - \dfrac{b^2}{4}\) and the value of \(f'\) to determine the exact shape of the quadratic form.</p>
+
+            <p class="lang-ja">\(A\)が正則でない、すなわち行列式がゼロである場合、状況はさらに複雑になります。まず、\(A\)が正則でない場合、\(A \mathbf{t} = -\mathbf{b}\)の解\(\mathbf{t}\)は定まらないか、無限に存在してしまいます。このため、今までの議論だけで放物線の具体的な形を決め切ることはできません。また、そもそも\(|A| = 0\)が放物線を表すことも自明ではありません。より進んだ議論が必要そうですが、残念ながら未だ私も考えている途中で、気が向いたらまた記事にしようかなと思います。こんなところでこの記事は終わりにしようと思います。</p>
+            <p class="lang-en">When \(A\) is not invertible, i.e., when its determinant is zero, the situation becomes more complex. First, if \(A\) is not invertible, the solution \(\mathbf{t}\) to \(A \mathbf{t} = -\mathbf{b}\) is either undefined or infinite. Therefore, we cannot determine the specific shape of a parabola solely based on previous discussions. Moreover, it is not obvious that \(|A| = 0\) represents a parabola. More advanced discussions are needed, but unfortunately, I am still in the process of thinking about this topic and may write another article when I get the chance. Let's end this article here.</p>
+
+            <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                <span class="lang-ja">最後に</span><span class="lang-en">Finally</span>
+            </h2>
+
+            <p class="lang-ja">この記事では一般的な二次形式の解析方法について、考察を進めていきました。今回は2変数、すなわち平面での振る舞いを中心に考えましたが、より高次の空間での解析にも応用できるのが特に強力ですね。個人的には二次形式は線形代数の威力がよくわかるので好きです。ただ、放物線型の二次形式に関しては、より詳細の議論が必要でしょう。さらに、複素数に拡張してエルミート行列を使った場合や、ミンコフスキー空間などの計量が違う空間での議論、あるいは3次形式やそれ以上の次数を増やした時のことも面白そうで将来的に考えたいなと思っています。</p>
+            <p class="lang-en">In this article, we have explored the general methods for analyzing quadratic forms. We have discussed the behavior of quadratic forms in two variables, i.e., in the plane, but the techniques can be applied to higher-dimensional spaces as well, which is particularly powerful.Personally, I find quadratic forms fascinating because they clearly demonstrate the power of linear algebra. However, for parabolic-type quadratic forms, more detailed discussions are necessary. Furthermore, I am interested in extending these concepts to complex numbers with Hermitian matrices, or discussing different metrics in spaces like Minkowski space, or even higher-degree forms such as cubic forms and beyond. These are topics I would like to explore in future articles.</p>
+
+            <p class="lang-ja">本記事についての、指摘やコメント、あるいは議論も大歓迎です！ もしあればメールで教えてください！</p>
+            <p class="lang-en">Comments, suggestions, or discussions about this article are welcome! If you have any, please feel free to email me!</p>
+        </article>
+    </main>
+    <!-- JavaScript -->
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.getElementById('btn-ja').classList.toggle('lang-btn-active', lang === 'ja');
+            document.getElementById('btn-en').classList.toggle('lang-btn-active', lang === 'en');
+        }
+    </script>
+</body>
+</html>

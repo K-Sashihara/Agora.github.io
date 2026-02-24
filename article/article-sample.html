@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article | Physics Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Roboto+Mono&display=swap');
+        body { font-family: 'Noto Serif JP', serif; }
+        .mono { font-family: 'Roboto Mono', monospace; }
+        
+        /* Bilingual Switch Logic */
+        html[lang="en"] .lang-ja { display: none; }
+        html[lang="ja"] .lang-en { display: none; }
+        .lang-btn-active { font-weight: bold; text-decoration: underline; }
+
+        /* Article Styling */
+        article p { margin-bottom: 1.5rem; color: #374151; line-height: 1.8; }
+        .math-block { background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0; overflow-x: auto; }
+        code { font-family: 'Roboto Mono', monospace; background: #f3f4f6; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+        pre { background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin: 2rem 0; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <!-- Header -->
+    <header class="max-w-3xl mx-auto pt-12 px-6">
+        <div class="flex justify-between items-center mb-12">
+            <a href="../index.html" class="text-xs uppercase tracking-widest border-b border-gray-900 pb-1 hover:text-gray-500 transition">← Back to Portfolio</a>
+            
+            <div class="text-xs mono space-x-2">
+                <button onclick="setLanguage('ja')" id="btn-ja" class="lang-btn-active">JP</button>
+                <span class="text-gray-300">/</span>
+                <button onclick="setLanguage('en')" id="btn-en">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 pb-24">
+        <!-- Article Header -->
+        <header class="mb-16">
+            <div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 mono">Simulation / Statistical Mechanics</div>
+            <h1 class="text-3xl font-bold mb-6 leading-tight">
+                <span class="lang-ja">2次元イジングモデルにおける相転移の数値計算</span>
+                <span class="lang-en">Numerical Simulation of Phase Transitions in the 2D Ising Model</span>
+            </h1>
+            <div class="text-sm text-gray-500 mono">Date: 2023.10.25</div>
+        </header>
+
+        <!-- Article Body -->
+        <article>
+            <!-- Introduction -->
+            <section>
+                <p class="lang-ja">本記事では、統計力学の最も基本的なモデルの一つである2次元イジングモデルを用い、マルコフ連鎖モンテカルロ法（メトロポリス法）によって相転移の様子をシミュレーションした結果を報告します。</p>
+                <p class="lang-en">In this article, I report the results of simulating phase transitions using the 2D Ising model, one of the most fundamental models in statistical mechanics, via the Markov Chain Monte Carlo (Metropolis) method.</p>
+            </section>
+
+            <!-- Mathematics Section -->
+            <section class="mt-12">
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">理論背景</span><span class="lang-en">Theoretical Background</span>
+                </h2>
+                <p class="lang-ja">相互作用するスピン系のハミルトニアンは以下のように記述されます：</p>
+                <p class="lang-en">The Hamiltonian of the interacting spin system is described as follows:</p>
+                
+                <div class="math-block">
+                    \[ H = -J \sum_{\langle i,j \rangle} s_i s_j - h \sum_{i} s_i \]
+                </div>
+                
+                <p class="lang-ja">ここで、\(J > 0\) は強磁性相互作用、\(s_i \in \{+1, -1\}\) は各格子点上のスピンを表します。</p>
+                <p class="lang-en">Where \(J > 0\) represents the ferromagnetic interaction and \(s_i \in \{+1, -1\}\) represents the spin at each lattice site.</p>
+            </section>
+
+            <!-- Image/Graph Placeholder -->
+            <div class="my-12">
+                <div class="w-full h-64 bg-gray-100 flex items-center justify-center text-gray-400 rounded-lg border border-dashed border-gray-300">
+                    <!-- <img src="magnetization_plot.png" alt="Magnetization Plot" class="max-w-full"> -->
+                    <span>[ここにシミュレーション結果のグラフを配置]</span>
+                </div>
+                <p class="text-center text-xs text-gray-400 mt-4 mono">Fig 1. Temperature dependence of Magnetization \(M(T)\)</p>
+            </div>
+
+            <!-- Code Section -->
+            <section class="mt-12">
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">実装 (Python)</span><span class="lang-en">Implementation (Python)</span>
+                </h2>
+                <p class="lang-ja">スピンの反転確率を計算するコア部分は以下の通りです：</p>
+                <p class="lang-en">The core part calculating the spin-flip probability is as follows:</p>
+
+<pre><code>def update_spins(lattice, beta, J):
+    N = len(lattice)
+    for _ in range(N*N):
+        x, y = np.random.randint(0, N, 2)
+        dE = 2 * J * lattice[x, y] * (
+            lattice[(x+1)%N, y] + lattice[(x-1)%N, y] +
+            lattice[x, (y+1)%N] + lattice[x, (y-1)%N]
+        )
+        if dE <= 0 or np.random.rand() < np.exp(-beta * dE):
+            lattice[x, y] *= -1</code></pre>
+            </section>
+
+            <!-- Conclusion -->
+            <section class="mt-12">
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">結言</span><span class="lang-en">Conclusion</span>
+                </h2>
+                <p class="lang-ja">相転移点付近での比熱の臨界指数についても、有限サイズスケーリングを用いて解析を行う予定です。</p>
+                <p class="lang-en">I plan to analyze the critical exponents of specific heat near the phase transition point using finite-size scaling.</p>
+            </section>
+        </article>
+    </main>
+
+    <footer class="max-w-3xl mx-auto px-6 py-12 border-t border-gray-100 text-center text-xs text-gray-400 mono">
+        &copy; 2023 [Your Name]. All rights reserved.
+    </footer>
+
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            if (lang === 'ja') {
+                document.getElementById('btn-ja').classList.add('lang-btn-active');
+                document.getElementById('btn-en').classList.remove('lang-btn-active');
+            } else {
+                document.getElementById('btn-ja').classList.remove('lang-btn-active');
+                document.getElementById('btn-en').classList.add('lang-btn-active');
+            }
+        }
+    </script>
+</body>
+</html>

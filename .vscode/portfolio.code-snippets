@@ -1,0 +1,163 @@
+{
+  "Work grid": {
+    "prefix": "work-grid",
+    "body": [
+      "<!-- Snippet: Work Item Card -->",
+      "<article class=\"work-item\" data-tags=\"simulation physics\">",
+      "    <span class=\"text-[10px] text-gray-400 uppercase tracking-widest mono\">Simulation / Physics</span>",
+      "    <h3 class=\"text-lg font-bold mb-2 mt-1\">",
+      "        <span class=\"lang-ja\">実績の日本語タイトル</span>",
+      "        <span class=\"lang-en\">Work Title in English</span>",
+      "    </h3>",
+      "    <p class=\"text-sm text-gray-600 mb-4\">",
+      "        <span class=\"lang-ja\">ここに実績の短い説明を記述します。</span>",
+      "        <span class=\"lang-en\">A brief description of the work goes here.</span>",
+      "    </p>",
+      "    <div class=\"text-sm my-4 bg-gray-50 p-4 rounded\">",
+      "        \\[ H = -J \\sum_{\\langle i,j \\rangle} s_i s_j \\]",
+      "    </div>",
+      "    <a href=\"article/your-article.html\" class=\"text-xs border-b border-gray-900 pb-1 hover:text-gray-500 transition\">",
+      "        <span class=\"lang-ja\">記事を読む</span>",
+      "        <span class=\"lang-en\">Read Article</span>",
+      "    </a>",
+      "</article>"
+    ],
+    "description": "Work item card snippet for portfolio"
+  },
+
+  "sample_article": {
+    "prefix": "article",
+    "body": [
+      "<!DOCTYPE html>",
+      "<html lang=\"ja\">",
+      "<head>",
+      "    <meta charset=\"UTF-8\">",
+      "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "    <title>Article | Physics Portfolio</title>",
+      "    <script src=\"https://cdn.tailwindcss.com\"><\/script>",
+      "    <script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"><\/script>",
+      "    <style>",
+      "        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Roboto+Mono&display=swap');",
+      "        body { font-family: 'Noto Serif JP', serif; } .mono { font-family: 'Roboto Mono', monospace; }",
+      "        html[lang=\"en\"] .lang-ja { display: none; } html[lang=\"ja\"] .lang-en { display: none; }",
+      "        .lang-btn-active { font-weight: bold; text-decoration: underline; }",
+      "        article p { margin-bottom: 1.5rem; color: #374151; line-height: 1.8; }",
+      "        .math-block { background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0; overflow-x: auto; }",
+      "        code { font-family: 'Roboto Mono', monospace; background: #1f2937; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }",
+      "        pre { background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin: 2rem 0; font-size: 0.85em; }",
+      "    </style>",
+      "</head>",
+      "<body class=\"bg-white text-gray-900\">",
+      "    <!-- Header -->",
+      "    <header class=\"max-w-3xl mx-auto pt-12 px-6\">",
+      "        <div class=\"flex justify-between items-center mb-12\">",
+      "            <a href=\"../index.html\" class=\"text-xs uppercase tracking-widest border-b border-gray-900 pb-1 hover:text-gray-500 transition\">← Back to Portfolio</a>",
+      "            <div class=\"text-xs mono space-x-2\">",
+      "                <button onclick=\"setLanguage('ja')\" id=\"btn-ja\" class=\"lang-btn-active\">JP</button>",
+      "                <span class=\"text-gray-300\">/</span>",
+      "                <button onclick=\"setLanguage('en')\" id=\"btn-en\">EN</button>",
+      "            </div>",
+      "        </div>",
+      "    </header>",
+      "    <!-- Main Content -->",
+      "    <main class=\"max-w-3xl mx-auto px-6 pb-24\">",
+      "        <!-- ここに記事コンテンツを追加 -->",
+      "        <!-- Snippet: Article Header -->",
+      "        <header class=\"mb-16\">",
+      "            <div class=\"text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 mono\">CATEGORY HERE</div>",
+      "            <h1 class=\"text-3xl font-bold mb-6 leading-tight\">",
+      "                <span class=\"lang-ja\">記事の日本語タイトル</span>",
+      "                <span class=\"lang-en\">Article Title in English</span>",
+      "            </h1>",
+      "            <div class=\"text-sm text-gray-500 mono\">Date: YYYY.MM.DD</div>",
+      "        </header>",
+      "        <article>",
+      "            <!-- Snippet: Text Section -->",
+      "            <section class=\"mt-12\">",
+      "                <h2 class=\"text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4\">",
+      "                    <span class=\"lang-ja\">セクションの見出し</span><span class=\"lang-en\">Section Heading</span>",
+      "                </h2>",
+      "                <p class=\"lang-ja\">日本語の段落です。テキストをここに記述します。</p>",
+      "                <p class=\"lang-en\">This is an English paragraph. Text goes here.</p>",
+      "            </section>",
+      "            <!-- Snippet: MathJax Block -->",
+      "            <div class=\"math-block\">",
+      "                \\\\[ E = mc^2 \\\\]",
+      "            </div>",
+      "            <!-- Snippet: Image/Graph Block -->",
+      "            <div class=\"my-12\">",
+      "                <div class=\"w-full bg-gray-100 rounded-lg border\">",
+      "                    <img src=\"../assets/images/your-graph.png\" alt=\"Graph Description\">",
+      "                </div>",
+      "                <p class=\"text-center text-xs text-gray-400 mt-4 mono\">Fig 1. Caption for the figure</p>",
+      "            </div>",
+      "            <!-- Snippet: Code Block -->",
+      "            <pre><code># Your code here",
+      "print(\\\"Hello, world!\\\")</code></pre>",
+      "        </article>",
+      "    </main>",
+      "    <!-- JavaScript -->",
+      "    <script>",
+      "        function setLanguage(lang) {",
+      "            document.documentElement.lang = lang;",
+      "            document.getElementById('btn-ja').classList.toggle('lang-btn-active', lang === 'ja');",
+      "            document.getElementById('btn-en').classList.toggle('lang-btn-active', lang === 'en');",
+      "        }",
+      "    </script>",
+      "</body>",
+      "</html>"
+    ],
+    "description": "HTML article template with bilingual support and MathJax"
+  }, 
+
+  "section_header": {
+    "prefix": "section-header",
+    "body": [
+      "<h2 class=\"text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4\">",
+      "    <span class=\"lang-ja\">セクションの見出し</span><span class=\"lang-en\">Section Heading</span>",
+      "</h2>"
+    ],
+    "description": "Section header with bilingual support"
+  },
+
+  "text_section": {
+    "prefix": "text-section",
+    "body": [
+      "<p class=\"lang-ja\">日本語の段落です。テキストをここに記述します。</p>",
+      "<p class=\"lang-en\">This is an English paragraph. Text goes here.</p>"
+    ],
+    "description": "Text section with bilingual support"
+  },
+
+  "math_block": {
+    "prefix": "math-block",
+    "body": [
+      "<div class=\"math-block\">",
+      "    \\\\[ E = mc^2 \\\\]",
+      "</div>"
+    ],
+    "description": "MathJax block for displaying mathematical equations"
+  },
+
+  "code_block": {
+    "prefix": "code-block",
+    "body": [
+      "<pre><code># Your code here",
+      "print(\\\"Hello, world!\\\")</code></pre>"
+    ],
+    "description": "Code block with syntax highlighting"
+  },
+
+  "image_block": {
+    "prefix": "image-block",
+    "body": [
+      "<div class=\"my-12\">",
+      "    <div class=\"w-full bg-gray-100 rounded-lg border\">",
+      "        <img src=\"../assets/images/your-graph.png\" alt=\"Graph Description\">",
+      "    </div>",
+      "    <p class=\"text-center text-xs text-gray-400 mt-4 mono\">Fig 1. Caption for the figure</p>",
+      "</div>"
+    ],
+    "description": "Image block with caption"
+  }
+}
