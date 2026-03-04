@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Roboto+Mono&display=swap');
+        body { font-family: 'Noto Serif JP', serif; } .mono { font-family: 'Roboto Mono', monospace; }
+        html[lang="en"] .lang-ja { display: none; } html[lang="ja"] .lang-en { display: none; }
+        .lang-btn-active { font-weight: bold; text-decoration: underline; }
+        article p { margin-bottom: 1.5rem; color: #374151; line-height: 1.8; }
+        .math-block { background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0; overflow-x: auto; }
+        code { font-family: 'Roboto Mono', monospace; background: #1f2937; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+        pre { background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin: 2rem 0; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Header -->
+    <header class="max-w-3xl mx-auto pt-12 px-6">
+        <div class="flex justify-between items-center mb-12">
+            <a href="../index.html" class="text-xs uppercase tracking-widest border-b border-gray-900 pb-1 hover:text-gray-500 transition">← Back to the top page</a>
+            <div class="text-xs mono space-x-2">
+                <button onclick="setLanguage('ja')" id="btn-ja" class="lang-btn-active">JP</button>
+                <span class="text-gray-300">/</span>
+                <button onclick="setLanguage('en')" id="btn-en">EN</button>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-6 pb-24">
+        <!-- ここに記事コンテンツを追加 -->
+        <!-- Snippet: Article Header -->
+        <header class="mb-16">
+            <div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 mono">PHYSICS</div>
+            <h1 class="text-3xl font-bold mb-6 leading-tight">
+                <span class="lang-ja">多重極展開を用いた鏡像法の応用</span>
+                <span class="lang-en">Application of Image Method Using Multipole Expansion</span>
+            </h1>
+            <div class="text-sm text-gray-500 mono">Date: 2026.03.04</div>
+            <div class="text-sm text-gray-500 mono">
+                <span class="lang-ja">筆者: 指原 啓志</span>
+                <span class="lang-en">Author: Keishi Sashihara</span>
+            </div>
+        </header>
+        <article>
+            <!-- Snippet: Text Section -->
+            <section class="mt-12">
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">はじめに</span><span class="lang-en">Introduction</span>
+                </h2>
+                <p class="lang-ja">この記事では、多重極展開を用いた鏡像法の応用について調べてみたので、それをまとめようと思います。鏡像法は、境界条件を満たすように仮想的な電荷を配置することで、複雑な境界条件を扱う手法です。最も有名な例は、点電荷と無限に広がる導体板についての系でしょう。これは導体板に関して点電荷と対称な点に大きさが同じで符号が逆の電荷を配置することで、境界条件を満たすようにします。鏡像法は、ラプラス方程式の解の一意性であることから正当性が保証されますが、この辺りの理論的な背景については各自で調べてみてください。本稿では、鏡像法で解く上でみなさんがきっと一回は感じたことがあるであろう、あの「鏡像電荷を配置する位置はどこが正解なんだろう？」という疑問に対して、多重極展開を用いて答えを出してみようと思います。
+                </p>
+                <p class="lang-en">In this article, I will summarize my findings on the application of the image method using multipole expansion. The image method is a technique for handling complex boundary conditions by placing virtual charges in such a way that the boundary conditions are satisfied. The most famous example is a point charge near an infinite conducting plate. In this case, a charge of equal magnitude but opposite sign is placed symmetrically with respect to the conducting plate to satisfy the boundary conditions. The validity of the image method is guaranteed by the uniqueness of solutions to Laplace's equation, but you should investigate the theoretical background yourself. In this article, I will try to answer the question "where should we place the image charges?" using multipole expansion.
+                </p>
+            </section>
+
+            <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                <span class="lang-ja">多重極展開とは</span><span class="lang-en">What is Multipole Expansion?</span>
+            </h2>
+                <p class="lang-ja">まず、多重極展開について触れたいと思います。電荷分布\(\rho (\vec{r})\)が与えられた時、ポテンシャル\(\phi (\vec{r})\)は以下のように表せます。</p>
+                <p class="lang-en">First, let me explain what multipole expansion is. When a charge distribution \(\rho (\vec{r})\) is given, the potential \(\phi (\vec{r})\) can be expressed as follows:</p>
+
+                <div class="math-block">
+                    \[ 
+                    \begin{eqnarray}
+                    \phi(\vec{r}) &=& \frac{1}{4\pi\varepsilon_0} \int \frac{\rho(\vec{r'})}{|\vec{r} - \vec{r'}|} d^3\vec{r'} \\ 
+                        &=&  \frac{1}{4\pi\varepsilon_0} \int \frac{\rho(\vec{r'})}{\sqrt{r^2 + r'^2 - 2r r' \cos\gamma}} d^3\vec{r'} \\
+                        &=& \frac{1}{4\pi\varepsilon_0} \int \frac{1}{r} \frac{\rho(\vec{r'})}{\sqrt{\left(1 - \frac{r'}{r}\cos\gamma + \left(\frac{r'}{r}\right)^2\right)}} d^3\vec{r'}
+                    \end{eqnarray}
+                    \]
+                </div>
+
+                <p class="lang-ja">なお \(\gamma\) は \(\vec{r}\) と \(\vec{r'}\) のなす角を表します。ここで、ルジャンドル多項式の母関数についての以下の公式が成立します。</p>
+                <p class="lang-en">Here, \(\gamma\) represents the angle between \(\vec{r}\) and \(\vec{r'}\). The following formula holds for the generating function of Legendre polynomials:</p>
+
+                <div class="math-block">
+                    \[ \sum_{l=0}^{\infty} P_l(\cos\gamma) z^l = \frac{1}{\sqrt{1 - 2z\cos\gamma + z^2}} \]
+                </div>
+
+                <p class="lang-ja">これを用いると、ポテンシャルは以下のように表せます。</p>
+                <p class="lang-en">Using this, the potential can be expressed as follows:</p>
+            <!-- Snippet: MathJax Block -->
+
+            <div class="math-block">
+                \[ \phi(\vec{r}) = \frac{1}{4\pi\varepsilon_0} \sum_{l=0}^{\infty} \frac{1}{r^{l+1}} \int r'^l P_l(\cos\gamma) \rho(\vec{r'}) d^3\vec{r'} \]
+            </div>
+
+            <p class="lang-ja">ちなみに、各 \(l\) の項は多重極モーメントの影響を表します。例えば、\(l=0\) は単極子モーメント(つまり点電荷)、\(l=1\) は電気双極子モーメント、\(l=2\) は電気四重極子モーメントによるポテンシャルへの寄与を表します。この式だけも十分綺麗なのですが、\(\gamma\) には\(\vec{r}\) と \(\vec{r'}\) の関係に依存するため、せっかくなので、積分の中身を\(\vec{r'}\) に依存しない形に変形します。そのために、以下のルジャンドル多項式の加法定理を使います。</p>
+            <p class="lang-en">Every term in the expansion corresponds to a multipole moment. For example, \(l=0\) corresponds to a monopole moment (i.e., a point charge), \(l=1\) to an electric dipole moment, and \(l=2\) to an electric quadrupole moment. The expression is already quite elegant, but since \(\gamma\) depends on the relationship between \(\vec{r}\) and \(\vec{r'}\), we rewrite the integral in a form independent of \(\vec{r'}\) using the addition theorem for Legendre polynomials.</p>
+
+            <div class="math-block">
+                \[ P_l(\cos\gamma) = \sum_{m=-l}^{l} Y_{lm}^*(\theta', \phi') Y_{lm}(\theta, \phi) \]
+            </div>
+
+            <p class="lang-ja">注1. この式の導出は極めて煩雑ですが、詳細な説明が<a href="https://ieyasu03.web.fc2.com/PhysicsMath/25-Legendre_add.html" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">こちら</a>にてなされています。それ以外でも知らなかったことが多かったのでおすすめです。</p>
+            <p class="lang-en">Note 1. The derivation of this formula is quite tedious, but detailed explanations are available at <a href="https://ieyasu03.web.fc2.com/PhysicsMath/25-Legendre_add.html" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">this link</a>. It's also recommended for those who are unfamiliar with the topic.</p>
+
+            <p class="lang-ja">注2. 文献によっては係数が異なっている場合がありますが、これは球面調和関数の規格化の方法が異なっているためだと思われます。(たぶん)</p>
+            <p class="lang-en">Note 2. In some literature, the coefficients may differ due to different normalization conventions for spherical harmonics.</p>
+
+            <p class="lang-ja">ここで、\((r, \theta, \phi)\) と \((r', \theta', \phi')\) はそれぞれ\(\vec{r}\) と \(\vec{r'}\) の球面座標系における表現を表します。また、\(Y_{lm}(\theta, \phi)\) は球面調和関数と呼ばれる関数です。それでは早速、この公式を先ほどの積分に代入してみましょう。</p>
+            <p class="lang-en">Here, \((r, \theta, \phi)\) and \((r', \theta', \phi')\) represent the spherical coordinate representations of \(\vec{r}\) and \(\vec{r'}\), respectively. The function \(Y_{lm}(\theta, \phi)\) is called a spherical harmonic function. Then, Let's substitute this formula into the previous integral.</p>
+
+            <div class="math-block">
+                \[ \phi(\vec{r}) = \frac{1}{4\pi\varepsilon_0} \sum_{l=0}^{\infty} \left (\sum_{m=-l}^{l} \int r'^l Y_{lm}^*(\theta', \phi') \rho(\vec{r'}) d^3\vec{r'} \right ) \frac{Y_{lm}(\theta, \phi)}{r^{l+1}} \]
+            </div>
+
+            <p class="lang-ja">綺麗に\(\vec{r}\)と\(\vec{r'}\)を分離することができました。この式見ると、これは\(\phi(\vec{r})\)を球面調和関数の線形結合で表していることがわかります。さらに実は先ほども少し触れましたが、\(\int r'^l Y_{lm}^*(\theta', \phi') \rho(\vec{r'}) d^3\vec{r'}\)は、電荷分布\(\rho(\vec{r'})\)の\(l, m\)に対応する多重極モーメントを表す量になります。つまり、ポテンシャルは各多重極モーメントの寄与の和として表されていることになり、また、それらの寄与ごとに展開したものを多重極展開と呼びます。
+            </p>
+            <p class="lang-en">This cleanly separates \(\vec{r}\) and \(\vec{r'}\). Looking at this expression, we see that \(\phi(\vec{r})\) is expressed as a linear combination of spherical harmonics. As mentioned earlier, the integral \(\int r'^l Y_{lm}^*(\theta', \phi') \rho(\vec{r'}) d^3\vec{r'}\) represents the multipole moment of the charge distribution \(\rho(\vec{r'})\) corresponding to \(l\) and \(m\). Thus, the potential is expressed as a sum of contributions from each multipole moment, and this expansion is called a multipole expansion.
+            </p>
+
+            <p class="lang-ja">電荷分布がわかっていない場合でも、球面調和関数の直交性を用いることで、各多重極モーメントを求められるのが面白いですね。遠方のポテンシャルを求める際には、低次の多重極モーメントの寄与が主になるため、単極子モーメント(総電荷)や双極子モーメント(電荷の偏り)がわかっていき、電荷分布の構造が少しづつ見えてきます。
+            </p>
+            <p class="lang-en">Even when the charge distribution is unknown, we can determine each multipole moment using the orthogonality of spherical harmonics. When calculating the potential at large distances, contributions from lower-order multipole moments dominate. Thus, knowing the monopole moment (total charge) and dipole moment (charge asymmetry) allows us to gradually understand the structure of the charge distribution.
+            </p>
+
+        <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+            <span class="lang-ja">鏡像法への応用</span><span class="lang-en">Application to the Method of Images</span>
+        </h2>
+
+            <p class="lang-ja">さて、話を鏡像法に戻しましょう。鏡像法は極端に言えば、境界条件を満たすようなポテンシャルを見つければいいというものです。つまり、逆に言えば境界条件を満たすようにポテンシャルを構成すればいいのです。それでは以下の問題を通して実験してみましょう。まずは前節の議論で、ポテンシャルは \(Y_{lm}(\theta, \phi)\) を基底として展開することができることがわかったので、各係数(あるいは成分)をうまく選んで、境界条件を満たすポテンシャルを作ります。</p>
+            <p class="lang-en">Let's return to the method of images. At its most basic, the method of images is about finding a potential that satisfies the boundary conditions. In other words, we construct a potential that satisfies the boundary conditions. Let's check it out through the question below. First, from our previous discussion, we know that the potential can be expanded in terms of spherical harmonics \(Y_{lm}(\theta, \phi)\). So, we'll choose coefficients (or components) appropriately to construct a potential that satisfies the boundary conditions.</p>
+
+            <div class="math-block">
+                <p class="lang-ja">
+                    問題 <br>
+                    一様電場がかかっている中で、導体球が存在している時、その周りのポテンシャルを求めよ。ただし、導体球の半径を\(R\)とし、導体球の中心を原点とする。また、導体球は球は接地しており、外部の一様電場は大きさ\(E_0\)であり、z軸負の方向にかかっているものとする。
+                </p>
+                <p class="lang-en">Question. <br> Find the potential around a conducting sphere in a uniform electric field. The conducting sphere has radius \(R\) and is centered at the origin. The sphere is grounded, and the external uniform electric field has magnitude \(E_0\) in the negative z-direction.</p>
+            </div>
+
+            <p class="lang-ja">それでは、外部電荷や外場によるポテンシャルを\(\phi_e (\vec{r}) = E_0 z = E_0 r \cos\theta\)、それに対して境界条件を満たすために発生するポテンシャルを\(\phi_i (\vec{r}) = \sum_{l,m} c_{lm} \dfrac{Y_{lm}(\theta, \phi)}{r^{l+1}}\)とします。すると、境界条件を満たすポテンシャルは\(\phi = \phi_e + \phi_i\)となります。今や、仮想ポテンシャル\(\phi_i\)には点電荷だけでなく、双極子モーメントなどの多重極モーメントの情報を担わせることができるのです！</p>
+            <p class="lang-en">Now, let's denote the potential due to external charges and external fields as \(\phi_e (\vec{r})\), and the potential generated to satisfy boundary conditions as \(\phi_i (\vec{r}) = \sum_{l,m} c_{lm} \dfrac{Y_{lm}(\theta, \phi)}{r^{l+1}}\). Then, the potential satisfying the boundary conditions is \(\phi = \phi_e + \phi_i\). Now, the virtual potential \(\phi_i\) can carry not only information about point charges but also about multipole moments such as dipole moments!</p>
+
+            <p class="lang-ja">今回の問題で満たすべき境界条件は導体表面上でポテンシャルが0になることです。つまり、\(\phi(R, \theta, \phi) = 0\)が任意の\(\theta, \phi\)について成り立つ必要があります。ここで、\(Y_{10}(\theta, \phi) = \sqrt{\frac{3}{4\pi}} \cos\theta\) であることを用いると、この条件は以下のように変形できます。</p>
+            <p class="lang-en">In this problem, the boundary condition to be satisfied is that the potential is 0 on the conductor surface. That is, \(\phi(R, \theta, \phi) = 0\) must hold for any \(\theta, \phi\). From \( Y_{10}(\theta, \phi) = \sqrt{\frac{3}{4\pi}} \cos\theta\), we can rewrite the boundary condition as:</p>
+
+            <div class="math-block">
+                \[ \begin{eqnarray}
+                 \phi(R, \theta, \phi) &=& \phi_e(R, \theta, \phi) + \phi_i(R, \theta, \phi) \\
+                    &=& E_0 R \cos\theta + \sum_{l,m} c_{lm} \frac{Y_{lm}(\theta, \phi)}{R^{l+1}} \\
+                    &=& E_0 R \sqrt{\frac{4\pi}{3}} Y_{10}(\theta, \phi) + \sum_{l,m} c_{lm} \frac{Y_{lm}(\theta, \phi)}{R^{l+1}} \\
+                    &=& \sum_{l,m} \left ( c_{lm} \frac{1}{R^{l+1}} + E_0 R \sqrt{\frac{4\pi}{3}} \delta_{l1} \delta_{m0} \right ) Y_{lm}(\theta, \phi) \\
+                    &=& 0
+                \end{eqnarray}\]
+            </div>
+
+            <p class="lang-ja">よって、これを満たすためには、球面調和関数の各係数が0でなければなりません。すなわち、\(c_{lm}\) は以下のようになります。</p>
+            <p class="lang-en">Therefore, for this to be satisfied, each coefficient of the spherical harmonics must be zero. That is, the coefficients \(c_{lm}\) are given by:</p>
+
+            <div class="math-block">
+                \[ c_{lm} = \begin{cases} 
+                    - \sqrt{\frac{4\pi}{3}} E_0 R^3 & \text{if } l=1, m=0 \\
+                    0 & \text{otherwise}
+                \end{cases} \]
+            </div>
+
+            <p class="lang-ja">これより、仮想ポテンシャルは\(\phi_i = - \sqrt{\frac{4\pi}{3}} E_0 R^3 \dfrac{Y_{10}(\theta, \phi)}{r^2} = - E_0 R^3 \cos\theta \dfrac{1}{r^2}\)となります。つまり、大きさが\( 4 \pi \varepsilon_0 E_0 R^3\)の電気双極子を原点に配置したということですね。このようにして、鏡像電荷(厳密には双極子モーメントですが)がわかりました！ 結局求めたかったポテンシャルは\(\phi = \phi_e + \phi_i = E_0 r \cos\theta - E_0 R^3 \cos\theta \dfrac{1}{r^2} = E_0 z \left ( 1 - \dfrac{R^3}{r^3} \right )\)です。</p>
+            <p class="lang-en">Therefore, the virtual potential is \(\phi_i = - \sqrt{\frac{4\pi}{3}} E_0 R^3 \dfrac{Y_{10}(\theta, \phi)}{r^2} = - E_0 R^3 \cos\theta \dfrac{1}{r^2}\). That is, we have a dipole moment of magnitude \( 4 \pi \varepsilon_0 E_0 R^3\) at the origin. In this way, we have found the image charge (strictly speaking, the dipole moment). The potential we were looking for is given by: \(\phi = \phi_e + \phi_i = E_0 r \cos\theta - E_0 R^3 \cos\theta \dfrac{1}{r^2} = E_0 z \left ( 1 - \dfrac{R^3}{r^3} \right )\).</p>
+
+            <p class="lang-ja">ちなみに、今回のように系にある軸に関しての回転対称性がある場合は、\(\phi\) は必要でなくなります。つまり、\(m=0\)だけが残ることになり、これはルジャンドル多項式で展開できることを意味します。今回のような簡単な場合ではさほど変わりませんでしたが、より複雑な場合ではルジャンドル多項式での展開の方が計算が楽になると考えられます。
+            </p>
+            <p class="lang-en">By the way, in cases like this one where the system has rotational symmetry about an axis, the \(\phi\) dependence is not necessary. That is, only \(m=0\) remains, which means it can be expanded in terms of Legendre polynomials. In simple cases like this one, there is not much difference, but in more complex cases, expansion in terms of Legendre polynomials is often more convenient for calculations.</p>
+
+            <p class="lang-ja">このように、多重極展開を用いてポテンシャルを構成するという考え方を用いることで、鏡像電荷を効率的に求めることができるようになりました。この問題の他にも色々な問題で使えるみたいなので、ぜひ試してみてください。ただし、この方法は、境界条件が複雑な場合や、対称性がない場合には適用しづらいことがあります。以前の記事でも触れた以下の問題はその一例でしょう。</p>
+            <p class="lang-en">As shown in this example, using the multipole expansion approach to construct the potential allows us to efficiently determine image charges. This method can be applied to various problems, so please try it out. However, this method is not always applicable when boundary conditions are complex or when there is no symmetry. The following problem, which was mentioned in a previous article, is an example of such a case.</p>
+
+            <div class="math-block">
+                <p class="lang-ja">半径\(r\)の薄い導体円盤がある。中心軸(円盤の中心を通り、円盤に対して垂直な軸)に距離\(h\)の位置に点電荷\(q\)がある。このとき、導体円盤に誘導される電荷を求めよ。</p>
+                <p class="lang-en">A thin conducting disk of radius \(r\) exists. A point charge \(q\) is located at a distance \(h\) from the center axis (the axis passing through the center of the disk and perpendicular to it). Find the induced charge on the conducting disk.</p>
+            </div>
+
+            <p class="lang-ja">この問題のように、\(\theta\)あるいは\(\phi\)方向に対して領域が途中で変わるような場合、多重極展開を用いてもポテンシャルの連続性と微分可能性などの条件を満たす必要があります。実際やってみても、うまく行きませんでした。そのためこの問題は多重極展開を使っても解くのが難しいでしょう。</p>
+            <p class="lang-en">In problems like this one, where the domain changes in the \(\theta\) or \(\phi\) direction, using multipole expansion requires satisfying continuity and differentiability conditions for the potential. When I actually tried it, it didn't work well. Therefore, this problem is difficult to solve using multipole expansion.</p>
+
+        <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+            <span class="lang-ja">最後に</span><span class="lang-en">Section Conclusion</span>
+        </h2>
+
+        <p class="lang-ja">この記事では、多重極展開を用いて導体球の鏡像電荷を求める方法について説明しました。この手法は、対称性を持つ問題に特に効果的であり、複雑な境界条件を持つ問題に対しても適用できる可能性があります。その点でとても強力な手法と言えるでしょう。また、このように解くことにより思いつきではなく、自然な流れで鏡像電荷を求めることができます。私自身は学部2年正の時に鏡像法を学んだのですが、その配置の仕方があまりに天下り的で納得できてなかったのですが、その背景を知ることができました。思いつきですが、要はポテンシャルを球面調和関数に展開して議論したのですが、それは系に三次元の並進対称性があることを前提にしているからではないかと思います。物質中の自由電子など離散的な対称性がある場合では他の関数系で展開する必要があるかもしれません。そういうことを考えるのもとても面白そうです。</p>
+        <p class="lang-en">This article explained how to find image charges for conducting spheres using multipole expansion. This method is particularly effective for problems with symmetry and may be applicable to problems with complex boundary conditions. In this way, it is a very powerful technique. Moreover, solving problems in this manner allows us to determine image charges naturally, rather than through guesswork. I myself learned the image method in my second year of undergraduate studies, but I found the placement of the image charges very arbitrary and hard to accept. Now I understand the background behind it. In my opinion, the key idea is to expand the potential in terms of spherical harmonics, which assumes three-dimensional translational symmetry in the system. In cases with discrete symmetries, such as free electrons in a material, it may be necessary to expand using other function systems. Thinking about such considerations is very interesting.</p>
+
+        <p class="lang-ja">本記事についての、指摘やコメント、あるいは議論も大歓迎です！ もしあればメールで教えてください！</p>
+        <p class="lang-en">Comments, suggestions, or discussions about this article are welcome! If you have any, please feel free to email me!</p>
+
+        </article>
+    </main>
+    <!-- JavaScript -->
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.getElementById('btn-ja').classList.toggle('lang-btn-active', lang === 'ja');
+            document.getElementById('btn-en').classList.toggle('lang-btn-active', lang === 'en');
+        }
+    </script>
+</body>
+</html>
