@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Roboto+Mono&display=swap');
+        body { font-family: 'Noto Serif JP', serif; } .mono { font-family: 'Roboto Mono', monospace; }
+        html[lang="en"] .lang-ja { display: none; } html[lang="ja"] .lang-en { display: none; }
+        .lang-btn-active { font-weight: bold; text-decoration: underline; }
+        article p { margin-bottom: 1.5rem; color: #374151; line-height: 1.8; }
+        .math-block { background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0; overflow-x: auto; overflow-y: hidden; min-height: 0; }
+        .math-block .MathJax_Display { margin: 0; }
+        code { font-family: 'Roboto Mono', monospace; background: #1f2937; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+        pre { background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin: 2rem 0; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Header -->
+    <header class="max-w-3xl mx-auto pt-12 px-6">
+        <div class="flex justify-between items-center mb-12">
+            <a href="../index.html" class="text-xs uppercase tracking-widest border-b border-gray-900 pb-1 hover:text-gray-500 transition">← Back to the top page</a>
+            <div class="text-xs mono space-x-2">
+                <button onclick="setLanguage('ja')" id="btn-ja" class="lang-btn-active">JP</button>
+                <span class="text-gray-300">/</span>
+                <button onclick="setLanguage('en')" id="btn-en">EN</button>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-6 pb-24">
+        <!-- ここに記事コンテンツを追加 -->
+        <!-- Snippet: Article Header -->
+        <header class="mb-16">
+            <div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 mono">physics</div>
+            <h1 class="text-3xl font-bold mb-6 leading-tight">
+                <span class="lang-ja">ネーターの定理 part1</span>
+                <span class="lang-en">Noether's-theorem part1 </span>
+            </h1>
+            <div class="text-sm text-gray-500 mono">Date: 2026.03.05</div>
+            <div class="text-sm text-gray-500 mono">
+                <span class="lang-ja">筆者: 髙田 和毅</span>
+                <span class="lang-en">Author: Kazuki Takata</span>
+            </div>
+        </header>
+        <article>
+            <!-- Snippet: Text Section -->
+            <section class="mt-12">
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">はじめに</span><span class="lang-en">Introduction</span>
+                </h2>
+                <p class="lang-ja">この記事は髙田和毅の最初の投稿です。私は解析力学、
+                    特にネーターの定理に魅了されたため、それについて自分なりですがまとめてみました。軽くネーターの定理について説明します。
+                    解析力学ではラグランジアンという量が出てきて、その時間積分を作用と呼び、これらを通じて力学を再構成していきます。
+                    解析力学の利点としては座標系に依存しない(共変)ことがあげられますが、今回お話しするネーターの定理の主張によるとこのラグランジアンや
+                    作用が座標変換によって不変であるとき、その変換に対応した保存量が存在します。この座標変換に対する不変性、すなわち対称性と保存則が関係
+                    していることについてまとめてみようと思います。<br>
+                    ※この記事を読むにあたっては解析力学においてラグランジュ形式の知識、およびアインシュタインの縮約規則の知識が必要となります。
+                </p>
+                <p class="lang-en">This is the first post by Kazuki Takata. I have been fascinated by analytical mechanics, especially Noether's theorem, so I have tried to summarize it in my own way. Let me briefly explain Noether's theorem. In analytical mechanics, we encounter a quantity called the Lagrangian, and the integral of the Lagrangian over time is called the action. Through these, we reconstruct mechanics. One of the advantages of analytical mechanics is that it is coordinate-independent (covariant), and according to the main statement of Noether's theorem, when the Lagrangian or action is invariant under coordinate transformations, there exists a conserved quantity corresponding to that transformation. I would like to summarize how this invariance under coordinate transformations, i.e., symmetry, is related to conservation laws. <br>
+                    * To read this article, you will need knowledge of the Lagrangian formalism in analytical mechanics and Einstein's summation convention.
+                </p>
+            </section>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                   <span class="lang-ja">この記事における表記のルール</span><span class="lang-en">Notation Rules in This Article</span>
+                </h2> 
+                <p class="lang-ja">解析力学では、添え字のついた量が頻繁に出てきており、多変数関数を表す際、すべての添え字を書き下すと非常に煩雑になるた
+                 め、添え字を省略する場合があります。例えば、引数が\(x^1\)と\(x^2\)の関数\(f\)を考えるとき、すべての添え字を書き下すと\(f(x^1,x^2)\)となりますが、
+                 添え字を省略して\(f(x)\)と書くことがあります。異なる種類の引数、つまり\(x^1, x^2, y^1, y^2\)などがある場合は、すべての添え字を書き下すと
+                 \(f(x^1,x^2,y^1,y^2)\)となりますが、添え字を省略して\(f(x,y)\)と書くことがあります。また、解析力学では一般化座標およびその時間微分が登場し、ただ単に多変数関数の引数
+                 として使う場合もあれば、ラグランジュ方程式の解として、時間の関数として使う場合もあります。そこで、ただ単に\(q^i, \dot{q}^i\)と書けばそれは関数の引数として扱い、\(q^i(t), \dot{q}^i(t)\)
+                 と書けば時間の関数として扱うことにします。今までのことをまとめると、例えば添え字\(i\)が1と2をとる際、ラグランジアン\(L\)について\(L(q, \dot{q})\)は\(L(q^1, q^2, \dot{q}^1, \dot{q}^2)\)の4変数関数を指し、
+                 \(L(q(t), \dot{q}(t))\)は\(L(q^1(t), q^2(t), \dot{q}^1(t), \dot{q}^2(t))\)の時間\(t\)についての1変数関数を指すことになります。
+                </p>
+                <p class="lang-en">Analytical mechanics frequently involves quantities with indices, and when expressing multivariable functions, writing out all the indices can become very cumbersome. Therefore, 
+                 sometimes indices are omitted. For example, when considering a function \(f\) with arguments \(x^1\) and \(x^2\), writing out all the indices would give \(f(x^1,x^2)\), but it may be written as 
+                 \(f(x)\) with the indices omitted. When there are different types of arguments, such as \(x^1, x^2, y^1, y^2\), writing out all the indices would give \(f(x^1,x^2,y^1,y^2)\), but it may be written 
+                 as \(f(x,y)\) with the indices omitted. In analytical mechanics, generalized coordinates and their time derivatives appear, and they can be used simply as arguments of multivariable functions or as 
+                 solutions to Lagrange's equations, treated as functions of time. Therefore, we will treat \(q^i\) and \(\dot{q}^i\) as arguments of functions when written simply as \(q^i, \dot{q}^i\), and treat them 
+                 as functions of time when written as \(q^i(t), \dot{q}^i(t)\). To summarize what has been said so far, for example, when the index \(i\) takes values 1 and 2, for the Lagrangian \(L\), \(L(q, \dot{q})\) 
+                 refers to a four-variable function \(L(q^1, q^2, \dot{q}^1, \dot{q}^2)\), while \(L(q(t), \dot{q}(t))\) refers to a single-variable function of time \(t\), specifically \(L(q^1(t), q^2(t), \dot{q}^1(t), 
+                 \dot{q}^2(t))\).
+                </p>
+            </section>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                   <span class="lang-ja">解が分かっているときの座標変換</span><span class="lang-en">Coordinate Transformations When Solutions Are Known</span>
+                </h2>
+                <p class="lang-ja">\(L(q, \dot{q},t)\)を考えている\(N\)自由度系のラグランジアンとし、\(q^i(t)\)をこのラグランジアンについてのラグランジュ方程式の解とします。ネーターの定理で考える座標変換は変換の対象が時間\(t\)と一般化座標\(q^i\)であり、
+                 変換をするということは、時間の関数\(T(t)\)と一般化座標の関数\(u^i(q,t)\)を自分たちで定めることを意味します。ここで、時間の関数\(T(t)\)は単に時間の変換を表し、一般化座標の関数\(u^i(q,t)\)は一般化座標の変換を表します。これらを用いて
+                 新たな座標\(q'^i(t')\)を構築することを考えます。\(\epsilon\)を微小パラメータとし、以下の関係式を考えます。
+                <p class="lang-en">Let \(L(q, \dot{q},t)\) be the Lagrangian of an \(N\)-degree-of-freedom system, and let \(q^i(t)\) be a solution to the Lagrange equations for this Lagrangian. The coordinate transformations considered 
+                    in Noether's theorem involve transformations of time \(t\) and generalized coordinates \(q^i\). Defining a transformation means that we specify a function of time \(T(t)\) that represents the transformation of time, 
+                    and a function of the generalized coordinates \(u^i(q,t)\) that represents the transformation of the generalized coordinates. Using these, we will construct new coordinates \(q'^i(t')\). Let \(\epsilon\) be an infinitesimal 
+                    parameter, and consider the following relations:
+                 <div class="math-block">
+                    \begin{align} 
+                    t' &= t + \epsilon T(t) \label{eq:transformation-time} \tag{1} \\ 
+                    q'^i &= q^i(t) + \epsilon u^i(q(t),t) \tag{2} 
+                    \end{align}
+                 </div>
+                <p class="lang-ja">この関係式では、\(t'\)と\(q'^i\)が\(t\)を媒介変数として結ばれているため、\(q'^i\)は\(t'\)の関数として表すことができると予想されます。そのためには、\(t'\)と\(t\)が1対1変換であれば十分であると考えられます。\(q'^i(t')\)を得る方法としては、
+                 まず変換式(1) \(t' = t + \epsilon T(t)\)を\(t\)について解くことによって
+                <p class="lang-en">Since \(t'\) and \(q'^i\) are related through the parameter \(t\), it is expected that \(q'^i\) can be expressed as a function of \(t'\). To do this, it is sufficient to ensure that the transformation in equation (1) 
+                    \(t' = t + \epsilon T(t)\) is a one-to-one transformation. One way to obtain \(q'^i(t')\) is to first solve the transformation equation (1) for \(t\), which gives us
+                 <div class="math-block">
+                    \begin{align} t = \tilde{T}(t', \epsilon) \tag{3}
+                    \end{align}
+                 </div>
+                <p class="lang-ja">を得ることを考えます。そうすれば、求める\(q'^i(t')\)は式(2)の右辺の\(t\)に式(3)を代入することで
+                <p class="lang-en">By doing so, the desired \(q'^i(t')\) can be obtained by substituting equation (3) into the right-hand side of equation (2) as
+                 <div class="math-block">
+                    \begin{align} q'^i(t') = q^i(\tilde{T}(t', \epsilon)) + \epsilon u^i(q(\tilde{T}(t', \epsilon)), \tilde{T}(t', \epsilon)) \tag{4}
+                    \end{align}
+                 </div>
+                <p class="lang-ja">として得られます。
+                 ここから\(\epsilon\)が十分小さいとして、さらに議論を進めていきます。\(t' = t + \epsilon T(t)\)で\(t\)の逆解きによって\(\tilde{T}(t')\)を得られたことは、式(1)の右辺に式(3)を代入した式
+                <p class="lang-en">Since we have obtained \(\tilde{T}(t')\) by solving the inverse of \(t' = t + \epsilon T(t)\) for \(t\), the equation obtained by substituting equation (3) into the right-hand side of equation (1),
+                 <div class="math-block">
+                    \[ t' = \tilde{T}(t', \epsilon) + \epsilon T(\tilde{T}(t', \epsilon)) \]
+                 </div>
+                <p class="lang-ja">について、両辺が\(t'\)と\(\epsilon\)の恒等式として成り立っていることを意味します。まず、\(\epsilon = 0\)を代入することで、\(t' = \tilde{T}(t', 0)\)が得られます。
+                 次に右辺を\(\epsilon\)の1次のテイラー展開をすることで、
+                <p class="lang-en">By substituting \(\epsilon = 0\), we get \(t' = \tilde{T}(t', 0)\). Next, by performing a first-order Taylor expansion of the right-hand side in \(\epsilon\), we get
+                 <div class="math-block">
+                    \[ t' = \tilde{T}(t', 0) + \frac{\partial \tilde{T}}{\partial \epsilon}(t', 0) \epsilon + \epsilon T(\tilde{T}(t', 0))  \]
+                 </div>
+                <p class="lang-ja">が得られます。\(t' = \tilde{T}(t', 0)\)を思い出すと、上の式から
+                <p class="lang-en">Recalling that \(t' = \tilde{T}(t', 0)\), we can derive from the above equation that
+                 <div class="math-block">
+                    \[ \frac{\partial \tilde{T}}{\partial \epsilon}(t', 0) = -T(t') \]
+                 </div>
+                <p class="lang-ja">が得られます。したがって\(\epsilon\)が十分小さいとき、\(t' = t + \epsilon T(t)\)の逆解きによって得られる\(\tilde{T}(t', \epsilon)\)は
+                 \(\epsilon\)の1次までとると
+                <p class="lang-en">When \(\epsilon\) is sufficiently small, the \(\tilde{T}(t', \epsilon)\) obtained by solving the inverse of \(t' = t + \epsilon T(t)\) for \(t\) can be expressed to first order in \(\epsilon\) as
+                 <div class="math-block">
+                    \begin{align} \tilde{T}(t', \epsilon) = \tilde{T}(t', 0) + \frac{\partial \tilde{T}}{\partial \epsilon}(t', 0) \epsilon = t' - \epsilon T(t') \tag{5} \end{align}
+                 </div>
+                <p class="lang-ja">のように最初に定めた\(T(t)\)を用いて表すことができます。これを用いて、求める\(q'^i(t')\)は式(4)と式(5)から
+                <p class="lang-en">Using this, the desired \(q'^i(t')\) can be expressed using the originally defined \(T(t)\) as follows, based on equations (4) and (5):
+                 <div class="math-block">
+                    \begin{align}
+                     q'^i(t') &= q^i(t' - \epsilon T(t')) + \epsilon u^i(q(t' - \epsilon T(t')), t' - \epsilon T(t'))  \\
+                    &= q^i(t' - \epsilon T(t')) + \epsilon Q^i(t' - \epsilon T(t')) 
+                    \end{align}
+                 </div>
+                <p class="lang-ja">として得られます。ここで、\(Q^i(t) := u^i(q(t),t)\)と定義しました。さらに、この式を\(\epsilon\)の1次までとると、
+                <p class="lang-en"> This can be obtained as above, where we have defined \(Q^i(t) := u^i(q(t),t)\). Furthermore, by taking this equation to first order in \(\epsilon\), we get
+                 <div class="math-block">
+                    \begin{align} q'^i(t') = q^i(t') -\epsilon \dot{q}^i(t')T(t') + \epsilon Q^i(t') \tag{6}
+                    \end{align}
+                 </div>
+                <p class="lang-ja">が得られます。両辺を\(t'\)で微分することで\(\dot{q}'^i(t')\)は
+                <p class="lang-en">By differentiating both sides with respect to \(t'\), we get \(\dot{q}'^i(t')\) as
+                 <div class="math-block">
+                    \begin{align} \dot{q}'^i(t') = \dot{q}^i(t') - \epsilon \ddot{q}^i(t')T(t') - \epsilon \dot{q}^i(t')\dot{T}(t') + \epsilon \dot{Q}^i(t') \tag{7} \end{align}
+                 </div>
+                <p class="lang-ja">となります。以上により、変換として\(T(t)\)と\(u^i(q,t)\)を定めることによって、\(q'^i(t')\)と\(\dot{q}'^i(t')\)を得ることができました。
+                <p class="lang-en">Thus, by defining the transformations \(T(t)\) and \(u^i(q,t)\), we have obtained \(q'^i(t')\) and \(\dot{q}'^i(t')\).
+                </p>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">作用の対称性</span><span class="lang-en">Symmetry of the Action</span>
+                </h2>
+                <p class="lang-ja">前セクションでは変換を与える関数を定めた時の座標変換を考えましたが、このセクションではその座標変換で作用が対称性を持つとはどういうことかを考えていきます。
+                    \(t_1\)と\(t_2\)をある時刻として、\(t_1\)から\(t_2\)までのラグランジアン\(L(q(t), \dot{q}(t), t)\)の積分を作用\(S\)とします。つまり、
+                <p class="lang-en">In the previous section, we considered coordinate transformations given by defining transformation functions. In this section, we will consider 
+                    what it means for the action to have symmetry under those coordinate transformations. Let \(t_1\) and \(t_2\) be certain times, and let us define the action \(S\)
+                     as the integral of the Lagrangian \(L(q(t), \dot{q}(t), t)\) from \(t_1\) to \(t_2\). In other words,
+                 <div class="math-block">
+                     \[ S = \int_{t_1}^{t_2} L(q(t), \dot{q}(t), t) \, dt \]
+                 </div>
+                <p class="lang-ja">とします。ここで\(q^i(t)\)は引き続きラグランジュ方程式の解とします。さて、ここで前セクションで考えた座標変換をもとに作用\(S\)の座標変換\(S'\)を定義します。
+                    \(t_1'\)と\(t_2'\)を\(t_1\)と\(t_2\)の変換によって得られる時刻とします。つまり、\(t_1' = t_1 + \epsilon T(t_1)\)と\(t_2' = t_2 + \epsilon T(t_2)\)とします。この
+                    とき、\(S'\)を次のように定義します。
+                <p class="lang-en">Here, \(q^i(t)\) continues to be a solution to the Lagrange equations. Now, we define the coordinate transformation \(S'\) of the action \(S\) based on the coordinate transformations considered in the previous section.
+                    <div class="math-block">
+                        \[ S' = \int_{t_1'}^{t_2'} L(q'(t'), \dot{q}'(t'), t') \, dt' \]
+                    </div>
+                <p class="lang-ja">\(q'^i(t')\)と\(\dot{q}'^i(t')\)は前セクションで考えた座標変換によって得られる\(q'^i(t')\)と\(\dot{q}'^i(t')\)を指します。また、注意すべきことは
+                    上の積分の被積分関数はラグランジアン\(L(q, \dot{q}, t)\)の各\(q^i, \dot{q}^i\)に\(q'^i(t'), \dot{q}'^i(t')\)をそのまま代入したものであるということです。さて、作用の対称性とは、
+                    座標変換によって得られる\(S'\)が元の\(S\)と等しいことを意味します。つまり、
+                <p class="lang-en">The \(q'^i(t')\) and \(\dot{q}'^i(t')\) refer to the \(q'^i(t')\) and \(\dot{q}'^i(t')\) obtained by the coordinate transformations considered in the 
+                    previous section. It is also important to note that the integrand of the above integral is obtained by substituting \(q'^i(t')\) and \(\dot{q}'^i(t')\) directly into 
+                    each \(q^i, \dot{q}^i\) of the Lagrangian \(L(q, \dot{q}, t)\). Now, the symmetry of the action means that the \(S'\) obtained by the coordinate transformation is 
+                    equal to the original \(S\). In other words,
+                    <div class="math-block">
+                        \begin{align} \int_{t_1'}^{t_2'} L(q'(t'), \dot{q}'(t'), t') \, dt' = \int_{t_1}^{t_2} L(q(t), \dot{q}(t), t) \, dt \tag{8} \end{align}
+                    </div>          
+                <p class="lang-ja">が成り立つことを意味します。次のセクションでは、この作用の対称性がどのように保存量の存在につながるのかを考えていきます。
+                <p class="lang-en">This means that the above equation holds. In the next section, we will consider how this symmetry of the action leads to the existence of conserved quantities.
+                </p>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">保存則とネーターチャージ</span><span class="lang-en">Conservation Laws and Noether's Charge</span>
+                </h2>
+                <p class="lang-ja">前セクションでは、座標変換によって得られる\(S'\)が元の\(S\)と等しいことを作用の対称性と定義しましたが、このセクションではこの作用の対称性がどのように保存量の存在につながるのかを考えていきます。
+                    まず、式(8)の左辺の積分について、\(t'= t + \epsilon T(t)\)と置換して置換積分を実行します。したがって\(q'^i(t+\epsilon T(t))\)と\(\dot{q}'^i(t+\epsilon T(t))\)を計算しなければなりませんが、これは式(6)と式(7)を用いて
+                    \(\epsilon\)の1次までとることで
+                <p class="lang-en">First, we defined the symmetry of the action as the equality of \(S'\) obtained by the coordinate transformation and the original \(S\). In this section, we will consider how this symmetry of the action leads to the existence of conserved quantities.
+                    First, for the integral on the left-hand side of equation (8), we perform a substitution integral by substituting \(t' = t + \epsilon T(t)\). Therefore, we need to calculate \(q'^i(t+\epsilon T(t))\) and \(\dot{q}'^i(t+\epsilon T(t))\), which can be done using equations (6) and (7) by taking them to first order in \(\epsilon\) as follows:
+                 <div class="math-block">
+                    \begin{align} q'^i(t+\epsilon T(t)) &=  q^i(t+\epsilon T(t)) -\epsilon \dot{q}^i(t+\epsilon T(t))T(t+\epsilon T(t)) + \epsilon Q^i(t+\epsilon T(t))  \\ 
+                    &= q^i(t) + \epsilon \dot{q}^i(t)T(t) -\epsilon \dot{q}^i(t)T(t) + \epsilon Q^i(t)  \\
+                    &= q^i(t) + \epsilon Q^i(t) \tag{9} \\
+                    \\
+                    \dot{q}'^i(t+\epsilon T(t)) &= \dot{q}^i(t+\epsilon T(t)) - \epsilon \ddot{q}^i(t+\epsilon T(t))T(t+\epsilon T(t)) \\
+                    & \hspace{1em} - \epsilon \dot{q}^i(t+\epsilon T(t))\dot{T}(t+\epsilon T(t)) + \epsilon \dot{Q}^i(t+\epsilon T(t)) \\
+                    &= \dot{q}^i(t) + \epsilon \ddot{q}^i(t)T(t) - \epsilon \ddot{q}^i(t)T(t) - \epsilon \dot{q}^i(t)\dot{T}(t) + \epsilon \dot{Q}^i(t)  \\
+                    &= \dot{q}^i(t) - \epsilon \dot{q}^i(t)\dot{T}(t) + \epsilon \dot{Q}^i(t) \tag{10}
+                    \end{align}
+                 </div>
+                <p class="lang-ja">が得られます。これらと\(\frac{dt'}{dt} = 1 + \epsilon \dot{T}(t)\)を用いて式(8)の左辺の積分は\(\epsilon\)の1次までの項を考慮すると
+                <p class="lang-en">Using these and \(\frac{dt'}{dt} = 1 + \epsilon \dot{T}(t)\), the integral on the left-hand side of equation (8), considering terms up to first order in \(\epsilon\), becomes
+                 <div class="math-block">
+                    \begin{align} 
+                    &\int_{t_1'}^{t_2'} L(q'(t'), \dot{q}'(t'), t') \, dt' \\
+                    &= \int_{t_1}^{t_2} L(q(t) + \epsilon Q(t), \dot{q}(t) - \epsilon \dot{q}(t)\dot{T}(t) + \epsilon \dot{Q}(t), t + \epsilon T(t)) (1 + \epsilon \dot{T}(t)) dt \\
+                    &= \int_{t_1}^{t_2} \left[ L(q(t), \dot{q}(t), t) + \epsilon \left( \frac{\partial L}{\partial q^i} Q^i(t) + \frac{\partial L}{\partial \dot{q}^i} (-\dot{q}^i(t) \dot{T}(t) + \dot{Q}^i(t)) + \frac{\partial L}{\partial t} T(t) + L(q(t), \dot{q}(t), t) \dot{T}(t) \right) \right] dt \tag{11}
+                    \end{align}
+                </div> 
+                <p class="lang-ja">となります。ここで\(\epsilon\)の項の部分の\(\frac{\partial L}{\partial q^i}, \frac{\partial L}{\partial \dot{q}^i}, \frac{\partial L}{\partial t}\)は厳密には
+                <p class="lang-en">Strictly speaking, the \(\frac{\partial L}{\partial q^i}, \frac{\partial L}{\partial \dot{q}^i}, \frac{\partial L}{\partial t}\) in the \(\epsilon\) term should be written as
+                 <div class="math-block">
+                    \begin{align}
+                    \frac{\partial L}{\partial q^i}(q(t), \dot{q}(t), t ) \hspace{1em} \frac{\partial L}{\partial \dot{q}^i}(q(t), \dot{q}(t), t ) \hspace{1em} \frac{\partial L}{\partial t}(q(t), \dot{q}(t), t )
+                    \end{align}
+                 </div>
+                <p class="lang-ja">と書かれるべきですが、煩雑となるため、式(11)では省略して書いています。以降も同様にこの省略のルールに従って書いていきます。さて、作用の対称性から式(11)の積分が式(8)の右辺と等しいため
+                <p class="lang-en">These should be written as above, but they are omitted in equation (11) for simplicity. We will follow this convention of omission from now on as well. Now, since the
+                     integral in equation (11) is equal to the right-hand side of equation (8) due to the symmetry of the action,
+                <div class="math-block">
+                    \begin{align}
+                    &\epsilon \int_{t_1}^{t_2} \left( \frac{\partial L}{\partial q^i} Q^i(t) - \frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t) \dot{T}(t) + \frac{\partial L}{\partial \dot{q}^i} \dot{Q}^i(t) + \frac{\partial L}{\partial t} T(t) + L(q(t), \dot{q}(t), t) \dot{T}(t) \right)  dt  =  0 \tag{12}
+                    \end{align}  
+                </div>
+                <p class="lang-ja">が成り立ちます。ここから\(q^i(t)\)がラグランジュ方程式の解であることを用います。まず式(12)の被積分関数のうち、第1項はラグランジュ方程式から
+                <p class="lang-en">First, we will use the fact that \(q^i(t)\) is a solution to the Lagrange equations. The first term of the integrand of equation 
+                    (12) can be expressed using the Lagrange equations as follows:
+                 <div class="math-block">
+                    \begin{align}
+                    \frac{\partial L}{\partial q^i} Q^i(t) = \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{q}^i} \right) Q^i(t)
+                    \end{align}
+                 </div>          
+                <p class="lang-ja">となるため、式(12)の被積分関数の第1項と第3項の和は
+                <p class="lang-en">Since this is the case, the sum of the first and third terms of the integrand of equation (12) becomes
+                 <div class="math-block">
+                    \begin{align}
+                    \frac{\partial L}{\partial q^i} Q^i(t) + \frac{\partial L}{\partial \dot{q}^i} \dot{Q}^i(t) = \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{q}^i} \right) Q^i(t) + \frac{\partial L}{\partial \dot{q}^i} \dot{Q}^i(t) = \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{q}^i} Q^i(t) \right) \tag{13}
+                    \end{align}
+                 </div>
+                <p class="lang-ja">となります。さらに、式(12)の被積分関数の第4項については
+                <p class="lang-en">For the fourth term of the integrand of equation (12), we can use the following relation:
+                 <div class="math-block">
+                    \begin{align}
+                   \frac{d}{dt}L(q(t), \dot{q}(t), t) = \frac{\partial L}{\partial q^i} \dot{q}^i(t) + \frac{\partial L}{\partial \dot{q}^i} \ddot{q}^i(t) + \frac{\partial L}{\partial t}
+                    \end{align}
+                 </div>
+                <p class="lang-ja">という関係式が成り立つことを用いて、式(12)の被積分関数の第4項は
+                <p class="lang-en">Using the fact that the above relation holds, the fourth term of the integrand of equation (12) can be expressed as follows:
+                 <div class="math-block">
+                    \begin{align}
+                     \frac{\partial L}{\partial t} T(t) &= T(t) \left( \frac{d}{dt}L(q(t), \dot{q}, t)\right) - \frac{\partial L}{\partial q^i} \dot{q}^i(t) T(t) - \frac{\partial L}{\partial \dot{q}^i} \ddot{q}^i(t) T(t) \\
+                       & = T(t) \left( \frac{d}{dt}L(q(t), \dot{q}, t)\right)  - \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{q}^i} \right) \dot{q}^i(t) T(t)  - \frac{\partial L}{\partial \dot{q}^i} \ddot{q}^i(t) T(t) \tag{14}
+                    \end{align}
+                 </div>
+                <p class="lang-ja">となります。ここで式(14)の右辺第2項を得るために再びラグランジュ方程式を用いています。したがって式(13)と式(14)を式(12)の被積分関数に代入することで、式(12)は
+                <p class="lang-en">The second term on the right-hand side of equation (14) is obtained by using the Lagrange equations again. Therefore, by substituting equations 
+                    (13) and (14) into the integrand of equation (12), we get
+                    <div class="math-block">
+                        \begin{align}
+                        &\epsilon \int_{t_1}^{t_2} \left[ \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{q}^i} Q^i(t) \right) - \frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t) \dot{T}(t) - \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{q}^i} \right) \dot{q}^i(t) T(t)  - \frac{\partial L}{\partial \dot{q}^i} \ddot{q}^i(t) T(t) + T(t) \left( \frac{d}{dt}L(q(t), \dot{q}, t)\right) + L(q(t), \dot{q}(t), t) \dot{T}(t) \right] dt = 0 \tag{15}
+                        \end{align}
+                    </div>
+                <p class="lang-ja">となります。ここで、式(15)の被積分関数の第2項から第4項の和は注意深く見ると積の微分でまとめられることが分かり、同様に第5項と第6項の和も積の微分でまとめられることが分かります。したがって、式(15)は
+                <p class="lang-en">By carefully examining the second to fourth terms of the integrand of equation (15), we can see that they can be combined into a product derivative, and similarly, the fifth and 
+                    sixth terms can also be combined into a product derivative. Therefore, equation (15) can be written as
+                    <div class="math-block">
+                        \begin{align}
+                        & \int_{t_1}^{t_2}  \frac{d}{dt} \left[ \frac{\partial L}{\partial \dot{q}^i} \epsilon Q^i(t)  -  \left( \frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t)  - L(q(t), \dot{q}(t), t) \right)\epsilon T(t) \right] dt = 0 \tag{16}
+                        \end{align}
+                    </div>
+                <p class="lang-ja">となります。ここで、ネーターチャージ\(J\)を
+                <p class="lang-en">Here, we define the Noether charge \(J\) as
+                    <div class="math-block">
+                     \begin{align}
+                     J := \frac{\partial L}{\partial \dot{q}^i} \epsilon Q^i(t)  -  \left( \frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t)  - L(q(t), \dot{q}(t), t) \right) \epsilon T(t)
+                    \end{align}
+                    </div>
+                <p class="lang-ja">と定義すると、式(16)は
+                <p class="lang-en">By defining the Noether charge \(J\) as above, equation (16) can be written as
+                    <div class="math-block">
+                     \begin{align}
+                     J(t_1) = J(t_2)
+                     \end{align}
+                    </div>
+                <p class="lang-ja">を意味します。つまり、ネーターチャージ\(J\)は時刻\(t_1\)と\(t_2\)の間で保存量としてふるまうことを示しています。特に\(t_1\)と\(t_2\)を任意に取れるときは
+                    \(J\)は完全な保存量としてふるまうことが分かります。これがネーターの定理の主張するところであり、座標変換によって作用が対称性を持つときに保存量が存在することを示しています。
+                <p class="lang-en">This means that the Noether charge \(J\) behaves as a conserved quantity between times \(t_1\) and \(t_2\). In particular, when \(t_1\) and 
+                    \(t_2\) can be taken arbitrarily, it can be seen that \(J\) behaves as a complete conserved quantity. This is the main statement of Noether's theorem, 
+                    which shows that when the action has symmetry under coordinate transformations, there exists a conserved quantity.
+                </p>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">終わりに</span><span class="lang-en">Conclusion</span>
+                </h2>
+                <p class="lang-ja">以上で、ネーターの定理の説明を書いてみました。私はネーターの定理の、「対称性がある変換の数だけネーターチャージという統一な形として保存量が存在する」ことにとても感動
+                    したことを覚えています。なのでこの感動が少しでも伝われば幸いです。
+                    今回は作用の対称性という観点から保存量を導いてみましたが実はラグランジアンの対称性からも保存量が導けます
+                    (何ならそのほうがよく知られているかもしれません)。そちらのほうもpart2として書いていく予定ですので、興味のある方はそちらも読んでみてください。また、ラグランジアンの対称性の判定は
+                    今回の作用の対称性の判定よりも分かりやすいため、具体的なネーターの定理の例も次回のpart2で紹介する予定です。
+                <p class="lang-en">In conclusion, I have written an explanation of Noether's theorem. I remember being very impressed by the fact that Noether's theorem states that "for every 
+                    symmetry, there exists a conserved quantity in the form of a Noether charge". I hope that this excitement can be conveyed to some extent. In this article, we derived 
+                    conserved quantities from the perspective of symmetry of the action, but in fact, conserved quantities can also be derived from the symmetry of the Lagrangian (which may be more well-known). 
+                    I plan to write about that in part 2, so if you are interested, please read that as well. Also, since the determination of symmetry of the Lagrangian is easier to understand than the 
+                    determination of symmetry of the action, I plan to introduce specific examples of Noether's theorem in part 2 as well.
+                </p>
+                
+
+
+
+    <!-- JavaScript -->
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.getElementById('btn-ja').classList.toggle('lang-btn-active', lang === 'ja');
+            document.getElementById('btn-en').classList.toggle('lang-btn-active', lang === 'en');
+        }
+    </script>
+</body>
+</html>
