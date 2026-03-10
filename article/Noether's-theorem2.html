@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Roboto+Mono&display=swap');
+        body { font-family: 'Noto Serif JP', serif; } .mono { font-family: 'Roboto Mono', monospace; }
+        html[lang="en"] .lang-ja { display: none; } html[lang="ja"] .lang-en { display: none; }
+        .lang-btn-active { font-weight: bold; text-decoration: underline; }
+        article p { margin-bottom: 1.5rem; color: #374151; line-height: 1.8; }
+        .math-block { background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0; overflow-x: auto; overflow-y: hidden; min-height: 0; }
+        .math-block .MathJax_Display { margin: 0; }
+        code { font-family: 'Roboto Mono', monospace; background: #1f2937; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+        pre { background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin: 2rem 0; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Header -->
+    <header class="max-w-3xl mx-auto pt-12 px-6">
+        <div class="flex justify-between items-center mb-12">
+            <a href="../index.html" class="text-xs uppercase tracking-widest border-b border-gray-900 pb-1 hover:text-gray-500 transition">← Back to the top page</a>
+            <div class="text-xs mono space-x-2">
+                <button onclick="setLanguage('ja')" id="btn-ja" class="lang-btn-active">JP</button>
+                <span class="text-gray-300">/</span>
+                <button onclick="setLanguage('en')" id="btn-en">EN</button>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-6 pb-24">
+        <!-- ここに記事コンテンツを追加 -->
+        <!-- Snippet: Article Header -->
+        <header class="mb-16">
+            <div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 mono">Physics</div>
+            <h1 class="text-3xl font-bold mb-6 leading-tight">
+                <span class="lang-ja">ネーターの定理 part2</span>
+                <span class="lang-en">Noether's-theorem part2 </span>
+            </h1>
+            <div class="text-sm text-gray-500 mono">Date: 2026.03.10</div>
+            <div class="text-sm text-gray-500 mono">
+                <span class="lang-ja">筆者: 髙田 和毅</span>
+                <span class="lang-en">Author: Kazuki Takata</span>
+            </div>
+        </header>
+        <article>
+            <!-- Snippet: Text Section -->
+            <section class="mt-12">
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">はじめに</span><span class="lang-en">Introduction</span>
+                </h2>
+                <p class="lang-ja">
+                    前回の記事では、ネーターの定理を作用の対称性の観点から解説しました。しかし作用の対称性
+                    では積分を計算するために基本的にはラグランジュ方程式の解を求める必要があります。そのため
+                    対称性の判断が少々面倒となるため、今回はラグランジアンの対称性という解を求めなくても対称
+                    性を判断できる方法をまとめてみます。<br>
+                    ※ネーターの定理part1の記事を読むことをおすすめします。
+                </p>
+                <p class="lang-en">
+                    In the previous article, we explained Noether's theorem from the perspective of 
+                    the action's symmetry. However, with the symmetry of the action, calculating the 
+                    integral typically requires finding the solution to the Euler-Lagrange equations.
+                     Since this makes determining symmetry somewhat tedious, this time we will summarize 
+                     a method for determining symmetry without needing to find the solution, namely 
+                     by looking at the symmetry of the Lagrangian itself.<br>
+                    * We recommend reading the part 1 article on Noether's theorem first.
+                </p>
+            </section>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">解が分からないときの座標変換</span><span class="lang-en">Coordinate Transformations When Solutions Are Unknown</span>
+                </h2>
+                <p class="lang-ja">前回と同様に、時間の関数\(T(t)\)と一般化座標の関数\(u^i(q,t)\)を定めることによっ
+                    て座標変換をすることを考えます。今回は、解が分からない場合の座標変換を考えるため、\(q^i(t),\dot{q}^i(t)\)のような
+                    時間の関数を用いることで\(q'^i(t'),\dot{q}'^i(t')\)のような時間の関数を生成するのではなくただ単純な変数\(q^i, \dot{q}^i\)
+                    から\( q'^i, \dot{q}'^i\)のような変数を\(T(t)\)と\(u^i(q,t)\)を用いて生成することを考えます。このような自然な変換を与える
+                    ために前回の記事における式(9)と式(10)を参考にしてみます。その式を以下に再掲します。
+                </p>
+                <p class="lang-en">
+                    As in the previous article, we consider coordinate transformations defined by a function of time \(T(t)\) 
+                    and a function of generalized coordinates \(u^i(q,t)\). This time, to handle coordinate transformations when the true solutions 
+                    are unknown, rather than mapping functions of time \(q^i(t), \dot{q}^i(t)\) to new functions of time \(q'^i(t'), \dot{q}'^i(t')\), 
+                    we will simply map the independent variables \(q^i, \dot{q}^i\) to new variables \(q'^i, \dot{q}'^i\) 
+                    using \(T(t)\) and \(u^i(q,t)\). To derive a natural transformation like this, we can refer to equations (9) and (10) from the previous 
+                    article, reproduced below.
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    q'^i(t+\epsilon T(t)) &= q^i(t) + \epsilon Q^i(t) \tag{1} \\
+                    \dot{q}'^i(t+\epsilon T(t)) &= \dot{q}^i(t) - \epsilon \dot{q}^i(t)\dot{T}(t) + \epsilon \dot{Q}^i(t) \tag{2} \\
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    ここで\(Q^i(t)\)は前回の記事では\(u^i(q(t),t)\)と定義されていたことを思い出すと、\(\dot{Q}^i(t)\)は
+                </p>
+                <p class="lang-en">
+                    Recalling that \(Q^i(t)\) was defined as \(u^i(q(t),t)\) in the previous article, \(\dot{Q}^i(t)\) can be written as:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    \dot{Q}^i(t) &= \frac{\partial u^i}{\partial q^j}(q(t),t)\dot{q}^j(t) + \frac{\partial u^i}{\partial t}(q(t),t) \tag{3} \\
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    となることが分かります。ここから、式(1)の\(Q^i(t)\)に\(u^i(q(t),t)\)を代入し、式(2)の\(\dot{Q}^i(t)\)に式(3)を代入した後、
+                    \(q^i(t), \dot{q}^i(t),q'^i(t+\epsilon T(t)), \dot{q}'^i(t+\epsilon T(t))\)をそれぞれ\(q^i, \dot{q}^i, q'^i, \dot{q}'^i\)に置き換えたもの
+                    こそが、今回考えるべき座標変換であると考えられます。つまり、以下の式が今回考えるべき座標変換となります。
+                </p>
+                <p class="lang-en">
+                    Now, substitute \(u^i(q(t),t)\) for \(Q^i(t)\) in equation (1), and substitute equation (3) for \(\dot{Q}^i(t)\) in equation (2). 
+                    Then, replace the time-dependent functions \(q^i(t), \dot{q}^i(t), q'^i(t+\epsilon T(t)), \dot{q}'^i(t+\epsilon T(t))\) simply with 
+                    the variables \(q^i, \dot{q}^i, q'^i, \dot{q}'^i\). This gives us the coordinate transformations we need to consider this time. 
+                    In other words, the following equations define our transformation:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    q'^i &= q^i + \epsilon u^i(q,t) \tag{4} \\
+                    \dot{q}'^i &= \dot{q}^i - \epsilon \dot{q}^i\dot{T}(t) + \epsilon \left( \frac{\partial u^i}{\partial q^j}\dot{q}^j + \frac{\partial u^i}{\partial t} \right) \tag{5} \\
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    ここで注目すべきことは、\(q'^i, \dot{q}'^i\)が\(q^i, \dot{q}^i\)のみで記述されている点にあります。次のセクションではこの式(4)と式(5)を用いてラグランジアンの対称性
+                    を考察していきます。<br><br>
+                    ※変換に参考にした式が前回の記事の式(6)と式(7)を用いなかったのは式(7)には\(q^i\)の二回微分が入っていてうまく
+                    変換を定義できなかったからです。
+                </p>
+                <p class="lang-en">
+                    The key point to notice here is that \(q'^i\) and \(\dot{q}'^i\) are expressed solely in terms of \(q^i\) and \(\dot{q}^i\). 
+                    In the next section, we will use equations (4) and (5) to investigate the symmetry of the Lagrangian.<br><br>
+                    *Note: The reason we did not use equations (6) and (7) from the previous article as our reference is that equation (7) contains 
+                    the second derivative of \(q^i\), which prevents us from defining the transformation properly.
+                </p>
+            </section>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">ラグランジアンの対称性と保存則</span><span class="lang-en">Symmetry of the Lagrangian and Conservation Laws</span>
+                </h2>
+                <p class="lang-ja">
+                    前セクションでは解が分からないときの一般化座標の座標変換を考えました。これを用いてラグランジアンが対称性を持つとはどういうことかを定義していきます。
+                    では早速ラグランジアンの変換を考えます。そのためにラグランジアン\(L(q,\dot{q},t)\)の各\(q^i, \dot{q}^i, t\)にそれぞれ式(4)の右辺,式(5)の右辺,\(t+\epsilon T(t)\)
+                    を代入したものを考えます。それを明示的に表したものが以下の式となります。
+                </p>
+                <p class="lang-en">
+                    In the previous section, we considered the coordinate transformation of generalized coordinates when the exact solutions are unknown. 
+                    Using this, we will define what it means for a Lagrangian to have symmetry. Let's immediately consider the transformation of the Lagrangian. 
+                    To do this, we substitute the right-hand side of equation (4), the right-hand side of equation (5), and \(t+\epsilon T(t)\) into each 
+                    \(q^i\), \(\dot{q}^i\), and \(t\) of the Lagrangian \(L(q,\dot{q},t)\), respectively. Explicitly, this gives the following expression:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L\left(q+\epsilon u, \dot{q} - \epsilon \dot{q}\dot{T}(t) + \epsilon \left( \frac{\partial u}{\partial q^j}\dot{q}^j + \frac{\partial u}{\partial t} \right),t+\epsilon T(t)\right) \tag{6}
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    ここでラグランジアン\(L\)が前セクションで考えた座標変換に対して対称性を持つということを式(6)が元のラグランジアンと等しいことと定義します。つまり以下の式が成り立つことを意味します。
+                </p>
+                <p class="lang-en">
+                    We define the Lagrangian \(L\) as being symmetric with respect to the coordinate transformation considered in the previous section 
+                    if the expression in equation (6) is equal to the original Lagrangian. In other words, this means the following equation holds:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L\left(q+\epsilon u, \dot{q} - \epsilon \dot{q}\dot{T}(t) + \epsilon \left( \frac{\partial u}{\partial q^j}\dot{q}^j + \frac{\partial u}{\partial t} \right),t+\epsilon T(t)\right)=L(q,\dot{q},t) \tag{7}
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    注意してほしいことは式(7)が\(q^i, \dot{q}^i, t\)という変数に関して恒等的に成り立つことを表しているという点です。では、このことをなぜラグランジアンが変換に対して対称性を持つと定義したのかを
+                    少しだけ数学的に解説します。しかしこれを知らなくても保存則を導出することは可能のため飛ばしてもらっても構いません。変換を表す式(4),式(5)および\(t'=t+\epsilon T(t)\)はある\(\mathbb{R}^{2N+1}\)の部分集合\(U\)
+                    からある\(\mathbb{R}^{2N+1}\)の部分集合\(V\)への以下のような写像\(\psi\)を構築しているとも見れます。
+                </p>
+                <p class="lang-en">
+                    Note that equation (7) holds identically for the independent variables \(q^i\), \(\dot{q}^i\), and \(t\). Let's briefly explain 
+                    mathematically why this is defined as the Lagrangian having symmetry under the transformation. However, since it's possible to derive 
+                    conservation laws without knowing this, feel free to skip it. The transformations represented by equations (4), (5), and \(t'=t+\epsilon T(t)\) 
+                    can be seen as constructing a mapping \(\psi\) from a subset \(U\) of \(\mathbb{R}^{2N+1}\) to a subset \(V\) of \(\mathbb{R}^{2N+1}\), as follows:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    \psi : U &\rightarrow V \\
+                    \psi(q,\dot{q},t)&=(q',\dot{q}',t')
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    またラグランジアン\(L\)は\(U\)や\(V\)を含むくらい十分大きな\(\mathbb{R}^{2N+1}\)の部分集合を定義域とするような\(\mathbb{R}\)
+                    への関数とも見れます。そうすると式(7)が意味していることを写像として表すと
+                </p>
+                <p class="lang-en">
+                    Furthermore, the Lagrangian \(L\) can be viewed as a function mapping to \(\mathbb{R}\), whose domain is a subset of \(\mathbb{R}^{2N+1}\) 
+                    large enough to include \(U\) and \(V\). If we express the meaning of equation (7) as a mapping, we get:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L\circ\psi = L \tag{8}
+                    \end{align}
+                </div>
+                 <p class = "lang-ja">
+                    となります(正確には\(L\)を適切な集合で制限すべきだが)。さて、今考えているラグランジアンを\((q',\dot{q}',t')\)で記述しようと考えるとき、\(\psi\)は全単射であることを要請し
+                    そのラグランジアン\(L'(q',\dot{q}',t')\)は\((L\circ\psi^{-1})(q',\dot{q}',t')\)と定義するのが自然でしょう。そして、ラグランジアンが変換\(\psi\)に対して対称性
+                    を持つとき、式(8)が成り立つため\(L'\)は
+                 </p>
+                <p class="lang-en">
+                    (Strictly speaking, \(L\) should be restricted to an appropriate set). Now, when we want to describe the current Lagrangian 
+                    in terms of \((q',\dot{q}',t')\), it is natural to require \(\psi\) to be a bijection and to define the new Lagrangian 
+                    \(L'(q',\dot{q}',t')\) as \((L\circ\psi^{-1})(q',\dot{q}',t')\). Then, when the Lagrangian has symmetry with respect to the 
+                    transformation \(\psi\), equation (8) holds true, so \(L'\) becomes:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L' = L\circ\psi^{-1}=L\circ\psi\circ\psi^{-1}=L
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    となってなんと写像として\(L'\)は\(L\)と等しくなりました。このことをラグランジアンの対称性と呼ぶのです。これはすごいことで、例えば2次元の1自由粒子系のラグランジアン\(L(x,y,\dot{x},\dot{y})\)
+                    について、本当はあり得ませんが極座標への変換に対して対称性を持つとき極座標系でのラグランジアン\(L'(r,\theta,\dot{r},\dot{\theta})\)は
+                </p>
+                <p class="lang-en">
+                    Amazingly, as a mapping, \(L'\) becomes exactly equal to \(L\). This is what we call the symmetry of the Lagrangian, and it is a very 
+                    strong property. For example, consider the Lagrangian \(L(x,y,\dot{x},\dot{y})\) of a 2D single free particle system. If it were symmetric 
+                    under a transformation to polar coordinates (which is impossible, hypothetically speaking), the Lagrangian in the polar coordinate 
+                    system \(L'(r,\theta,\dot{r},\dot{\theta})\) would be:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L'(r,\theta,\dot{r},\dot{\theta})= \frac{1}{2}m(\dot{r}^2+\dot{\theta}^2)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    と結論付けることが可能となってしまいます(何度も言いますがこれはあり得ません)。したがってラグランジアンの対称性は強い条件となるのです。
+                    話を戻します。ラグランジアンが対称性を持つとき、式(7)の\(q^i,\dot{q}^i\)のそれぞれにラグランジュ方程式の解についての\(q^i(t), \dot{q}^i(t)\)
+                    を代入してみます。この時、\(Q^i(t)=u^i(q(t),t)\)であったことや式(3)を用いると式(7)は以下のように書き換わります。
+                </p>
+                <p class="lang-en">
+                    We would be forced to conclude this (though, to reiterate, this is impossible). Therefore, the symmetry of the Lagrangian is a 
+                    very restrictive condition. Returning to our main topic: assuming the Lagrangian possesses symmetry, let's substitute the solutions 
+                    of the Euler-Lagrange equations, \(q^i(t)\) and \(\dot{q}^i(t)\), for \(q^i\) and \(\dot{q}^i\) in equation (7). Using the fact 
+                    that \(Q^i(t)=u^i(q(t),t)\) and applying equation (3), equation (7) can be rewritten as follows:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                   L(q(t)+\epsilon Q(t),\dot{q}(t)-\epsilon \dot{q}(t)\dot{T}(t)+\epsilon \dot{Q}(t),t+\epsilon T(t))=L(q(t),\dot{q}(t),t) \tag{9}
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    次に式(9)の左辺を\(\epsilon\)の一次で展開することでさらに以下の式を得ます。
+                </p>
+                <p class="lang-en">
+                    Next, by expanding the left side of equation (9) to the first order in \(\epsilon\), we obtain the following equation:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                   \epsilon\left[\frac{\partial L}{\partial q^i}Q^i(t)-\frac{\partial L}{\partial \dot{q}^i}\dot{q}^i(t)\dot{T}(t)+\frac{\partial L}{\partial \dot{q}^i}\dot{Q}^i(t)+\frac{\partial L}{\partial t}T(t)\right]=0 \tag{10}
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    ここで式(10)の左辺がpart1の記事の式(12)の被積分関数から\(L(q(t),\dot{q}(t),t)\dot{T}(t)\)を引いたものと等しい(※正確にはこれらに\(\epsilon\)をかけたもの)ことが
+                    分かります。また、part1の記事の式(12)の被積分関数の式変形によってpart1の記事の式(16)の被積分関数を得られていたことを思い出すと式(10)は
+                </p>
+                <p class="lang-en">
+                    Here, we can see that the left side of equation (10) is equal to the integrand of equation (12) from the Part 1 article minus 
+                    \(L(q(t),\dot{q}(t),t)\dot{T}(t)\) (more precisely, multiplied by \(\epsilon\)). Also, recalling that the integrand of equation (16) 
+                    from the Part 1 article was obtained by manipulating the integrand of equation (12), equation (10) can be transformed into:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    \frac{d}{dt}\left[\frac{\partial L}{\partial \dot{q}^i} \epsilon Q^i(t)  -  \left( \frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t)  - L(q(t), \dot{q}(t), t) \right) \epsilon T(t)\right]=L(q(t),\dot{q}(t),t)\dot{T}(t) 
+                    \end{align}
+                </div>
+                 <p class="lang-ja">
+                    のように式変形されます。ここで左辺はpart1の記事で出てきたネーターチャージの時間微分を表しており、それが\(L(q(t),\dot{q}(t),t)\dot{T}(t)\)と等しいことが分かります。したがって\(L(q(t),\dot{q}(t),t)\dot{T}(t)\)が0でさえあれば
+                    今回もネーターチャージ\(J\)が保存量としてふるまうことが分かります。以下に\(J\)を再掲します。
+                 </p>
+                 <p class="lang-en">
+                    The left side of this equation represents the time derivative of the Noether charge introduced in the Part 1 article, and we can see 
+                    that it is equal to \(L(q(t),\dot{q}(t),t)\dot{T}(t)\). Therefore, as long as \(L(q(t),\dot{q}(t),t)\dot{T}(t)\) is 0, the Noether charge 
+                    \(J\) will behave as a conserved quantity in this case as well. Let's write down \(J\) once again:
+                 </p>
+                 <div class="math-block">
+                    \begin{align}
+                        J = \frac{\partial L}{\partial \dot{q}^i} \epsilon Q^i(t)  -  \left( \frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t)  - L(q(t), \dot{q}(t), t) \right) \epsilon T(t) \tag{11}
+                    \end{align}
+                 </div>
+                 <p class="lang-ja">
+                    \(L(q(t),\dot{q}(t),t)\)が0かどうかは考えている系にかなり依存しているのでふつうは座標変換として\(\dot{T}(t)\)を0と要請します。そうすることでネーターチャージが保存量
+                    となります。よって今までのことをまとめると\(\dot{T}(t)=0\)となるような座標変換に対してラグランジアンが対称性を持つとき、part1と同様にネーターチャージが保存量となることが分かりました。
+                 </p>
+                 <p class="lang-en">
+                    Whether \(L(q(t),\dot{q}(t),t)\) is 0 heavily depends on the physical system being considered, so we usually require \(\dot{T}(t)\) 
+                    to be 0 as a condition for the coordinate transformation. By doing so, the Noether charge naturally becomes a conserved quantity. 
+                    To summarize what we've discussed so far: when the Lagrangian has symmetry under a coordinate transformation such that \(\dot{T}(t)=0\), 
+                    the Noether charge becomes a conserved quantity, exactly as we saw in Part 1.
+                 </p>
+
+
+            </section>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">ネーターの定理の具体例</span><span class="lang-en">Specific Examples of Noether's Theorem</span>
+                </h2>
+                <p class="lang-ja">
+                    今まではネーターの定理の一般論を扱ってきました。ここからネーターの定理を具体例から考えていきます。
+                    <br><br>
+                    (ⅰ)時間並進対称性<br>
+                    ラグランジアンの対称性から直接積分を実行しなくてもネーターの定理の判定ができるようになりましたが、それ
+                    でも式(6)が成り立つのかを確認するのは少々面倒くさいです。そこでまず最初に確認してほしいことがラグランジアンに
+                    時刻\(t\)が陽に入っているかどうかです。もし入っていなければそれだけで保存量が1つ得られます(時間並進対称性)。このことを確認し
+                    てみましょう。変換として\(u^i(q,t)=0, T(t)=1\)としてみます(もちろん\(\dot{T}(t)=0\)は満たされている)。
+                    この時、このラグランジアンが式(7)を満たすかどうかを確認します。この変換の下では式(7)の左辺は
+                </p>
+                <p class="lang-en">
+                    Up to this point, we have dealt with the general theory of Noether's theorem. From here on, let's explore it through some specific examples.
+                    <br><br>
+                    (i) Time Translation Symmetry<br>
+                    Thanks to the symmetry of the Lagrangian, we can now apply Noether's theorem without performing direct integrations. However, verifying 
+                    whether equation (6) holds can still be a bit tedious. Therefore, the very first thing you should check is whether the time \(t\) 
+                    explicitly appears in the Lagrangian. If it does not, you instantly get one conserved quantity (due to time translation symmetry). 
+                    Let's verify this. We assume a transformation where \(u^i(q,t)=0\) and \(T(t)=1\) (of course, \(\dot{T}(t)=0\) is satisfied). 
+                    Let's see if this Lagrangian satisfies equation (7). Under this transformation, the left side of equation (7) becomes:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L\left(q+\epsilon u, \dot{q} - \epsilon \dot{q}\dot{T}(t) + \epsilon \left( \frac{\partial u}{\partial q^j}\dot{q}^j + \frac{\partial u}{\partial t} \right),t+\epsilon T(t)\right)=L(q,\dot{q},t+\epsilon)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    となります。今、ラグランジアンは\(t\)に陽に依存していないため、この値は\(L(q,\dot{q},t)\)と等しくなります。したがって
+                    式(7)の左辺は式(7)の右辺と一致するためラグランジアンは対称性を持ちます。この時、保存する量は式(11)のネーターチャージ\(J\)に
+                    \(u^i(q,t)=0, T(t)=1\)を当てはめることで得られ、それは
+                </p>
+                <p class="lang-en">
+                    Now, since the Lagrangian does not explicitly depend on \(t\), this value is exactly equal to \(L(q,\dot{q},t)\). Thus, the left 
+                    side of equation (7) matches the right side, meaning the Lagrangian possesses symmetry. In this case, the conserved quantity can 
+                    be obtained by plugging \(u^i(q,t)=0\) and \(T(t)=1\) into the Noether charge \(J\) in equation (11), which yields:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    J=\frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t)  - L(q(t), \dot{q}(t), t)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    となります(※\(Q^i(t)=u^i(q(t),t)\)より\(Q^i(t)=0\)となります。また\(-\epsilon\)でも割りました)。この量はハミルトニアンになっていることに気づきます。つまり
+                    時間並進対称性はエネルギー保存を導くことが分かります。
+                </p>
+                <p class="lang-en">
+                    (*Since \(Q^i(t)=u^i(q(t),t)\), it follows that \(Q^i(t)=0\). Also, we divided out the \(-\epsilon\)). You may notice that this 
+                    quantity is precisely the Hamiltonian. This means that time translation symmetry leads directly to the conservation of energy.
+                </p>
+                <p class="lang-ja">
+                    (ⅱ)空間並進対称性<br>
+                    ここからはより具体的なラグランジアンを考えてみます。一次元運動をする2粒子系について、それぞれの座標を\(x^1, x^2\)とし、
+                    これらの粒子の間のポテンシャルが\(U(x^2-x^1)\)のように座標の差のみで記述される場合を考えます。つまりラグランジアンは
+                </p>
+                <p class="lang-en">
+                    (ii) Spatial Translation Symmetry<br>
+                    Let's consider a more concrete Lagrangian now. Imagine a 1-dimensional system with two particles at coordinates \(x^1\) and \(x^2\), 
+                    where the potential energy between them, \(U(x^2-x^1)\), depends solely on the difference in their coordinates. In other words, 
+                    the Lagrangian is:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L(x^1,x^2,\dot{x}^1,\dot{x}^2)=\frac{1}{2}m_1(\dot{x}^1)^2+\frac{1}{2}m_2(\dot{x}^2)^2-U(x^2-x^1)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    このラグランジアンには\(u^1(x,t)=u^2(x,t)=1,T(t)=0\)という変換、すなわち\(x'^1=x^1+\epsilon,x'^2=x^2+\epsilon, t'=t\)
+                    という変換に対して対称性(空間並進対称性)を持っています(式(5)から\(\dot{x}'^1=\dot{x}^1,\dot{x}'^2=\dot{x}^2\)になることが分かります)。
+                    このことは以下の式から分かります。
+                </p>
+                <p class="lang-en">
+                    This Lagrangian exhibits symmetry (spatial translation symmetry) under the transformation \(u^1(x,t)=u^2(x,t)=1\) and \(T(t)=0\), 
+                    which translates to \(x'^1=x^1+\epsilon\), \(x'^2=x^2+\epsilon\), and \(t'=t\) (from equation (5), it is clear that 
+                    \(\dot{x}'^1=\dot{x}^1\) and \(\dot{x}'^2=\dot{x}^2\)). This can be verified by the following calculation:
+                </p>
+                 <div class="math-block">
+                    \begin{align}
+                    L(x^1+\epsilon ,x^2+\epsilon ,\dot{x}^1,\dot{x}^2)&=\frac{1}{2}m_1(\dot{x}^1)^2+\frac{1}{2}m_2(\dot{x}^2)^2-U(x^2+\epsilon -(x^1+\epsilon))\\
+                    &=\frac{1}{2}m_1(\dot{x}^1)^2+\frac{1}{2}m_2(\dot{x}^2)^2-U(x^2-x^1)\\
+                    &=L(x^1,x^2,\dot{x}^1,\dot{x}^2)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    ここから保存量\(J\)は式(11)に\(u^1(x,t)=u^2(x,t)=1,T(t)=0\)を適応させて
+                </p>
+                <p class="lang-en">
+                    From here, the conserved quantity \(J\) is found by applying \(u^1(x,t)=u^2(x,t)=1\) and \(T(t)=0\) to equation (11):
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                        J = \frac{\partial L}{\partial \dot{x}^1}+\frac{\partial L}{\partial \dot{x}^2}=m_1\dot{x}^1+m_2\dot{x}^2
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    が得られます(\(Q^i(t)=u^i(x(t),t)=1\)である。またここでも\(\epsilon\) で割った。)。これは2粒子の全運動量を表しており、それが
+                    保存するということは、空間並進対称性は運動量保存を表していることが分かります。
+                </p>
+                <p class="lang-en">
+                    (*Here, \(Q^i(t)=u^i(x(t),t)=1\). We also divided by \(\epsilon\) again). This represents the total momentum of the two particles. 
+                    Since this quantity is conserved, we can see that spatial translation symmetry directly corresponds to the conservation of momentum.
+                </p>
+                <p class="lang-ja">
+                    (ⅲ)回転対称性<br>
+                    万有引力型ポテンシャルに関するラグランジアンについて考えてみましょう。すなわち以下のようなラグランジアンです。
+                </p>
+                <p class="lang-en">
+                    (iii) Rotational Symmetry<br>
+                    Let's consider the Lagrangian for a universal gravitation-type potential (a central force field). That is, the following Lagrangian:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L(r,\theta,\dot{r},\dot{\theta}) = \frac{1}{2}m(\dot{r}^2+r^2\dot{\theta}^2)+\frac{GMm}{r}
+                    \end{align}                       
+                </div>
+                <p class="lang-ja">
+                    このラグランジアンは\(\theta\)に陽に依存していないことに気づきます。したがって\(r'=r,\theta'=\theta+\epsilon\)
+                    という変換に対してラグランジアンは対称性(回転対称性)を持ちます。これは時間並進対称性においてラグランジアンが時刻\(t\)に陽に依
+                    存していないことからエネルギーが保存則を得たことと同じ論法です。したがって保存量\(J\)は
+                </p>
+                <p class="lang-en">
+                    We notice that this Lagrangian does not explicitly depend on \(\theta\). Therefore, the Lagrangian has symmetry (rotational symmetry) 
+                    under the transformation \(r'=r, \theta'=\theta+\epsilon\). This follows the exact same logic we used for time translation symmetry, 
+                    where the lack of explicit dependence on time \(t\) led to the conservation of energy. Therefore, the conserved quantity \(J\) is:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    J = \frac{\partial L}{\partial \dot{\theta}} = mr^2\dot{\theta}
+                    \end{align}                       
+                </div>
+                <p class="lang-ja">
+                    となります。\(r\dot{\theta}\)は位置ベクトルに対する速度の垂直成分を表すため、この保存量は角運動量を表します。
+                    すなわち回転対称性は角運動量保存を表していることが分かります。
+                </p>
+                <p class="lang-en">
+                    Since \(r\dot{\theta}\) represents the tangential component of velocity relative to the position vector, this conserved quantity 
+                    represents angular momentum. In other words, rotational symmetry corresponds to the conservation of angular momentum.
+                </p>
+        </section>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">終わりに</span><span class="lang-en">Conclusion</span>
+                </h2>
+                <p class="lang-ja">
+                    今回の記事では作用積分を直接実行することなく、ラグランジアンの形から保存量が分かるネーターの定理を扱いました。
+                    そうすることでかなり保存量が見つけやすくなったのではないかと思います。実はネーターの定理はこれだけではなく、
+                    完全に対称性を持っていなくても似たような保存量が存在することが分かります。このことについては次回のpart3で
+                    話そうと思います。また、そこで作用の対称性とラグランジアンの対称性の間の関係についても話そうと思うので
+                    ぜひ次回も見てみてください。
+                </p>
+                 <p class="lang-en">
+                    In this article, we covered Noether's theorem, which allows us to find conserved quantities directly from the shape of the 
+                    Lagrangian without explicitly evaluating the action integral. This approach should make it much easier to identify conserved 
+                    quantities. Actually, Noether's theorem doesn't stop here; it turns out that similar conserved quantities can exist even if 
+                    a system lacks perfect symmetry. We will explore this in Part 3. We also plan to discuss the relationship between the symmetry 
+                    of the action and the symmetry of the Lagrangian there, so please look forward to the next part!
+                </p>
+    <!-- JavaScript -->
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.getElementById('btn-ja').classList.toggle('lang-btn-active', lang === 'ja');
+            document.getElementById('btn-en').classList.toggle('lang-btn-active', lang === 'en');
+        }
+    </script>
+</body>
+</html>
