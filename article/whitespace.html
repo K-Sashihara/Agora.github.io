@@ -13,7 +13,7 @@
         .lang-btn-active { font-weight: bold; text-decoration: underline; }
         article p { margin-bottom: 1.5rem; color: #374151; line-height: 1.8; }
         .math-block { background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0; overflow-x: auto; }
-        code { font-family: 'Roboto Mono', monospace; background: #1f2937; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+        code { font-family: 'Roboto Mono', monospace; background: #1f2937; color:#f9fafb; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em;}
         pre { background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin: 2rem 0; font-size: 0.85em; }
     </style>
 </head>
@@ -34,221 +34,202 @@
         <!-- ここに記事コンテンツを追加 -->
         <!-- Snippet: Article Header -->
         <header class="mb-16">
-            <div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 mono">CATEGORY HERE</div>
+            <div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 mono">Trick</div>
             <h1 class="text-3xl font-bold mb-6 leading-tight">
-                <span class="lang-ja">記事の日本語タイトル</span>
-                <span class="lang-en">Article Title in English</span>
+                <span class="lang-ja">pythonでwhitespaceのインタプリタを作る</span>
+                <span class="lang-en">Making whitespace Interpreter with Python</span>
             </h1>
-            <div class="text-sm text-gray-500 mono">Date: YYYY.MM.DD</div>
+            <div class="text-sm text-gray-500 mono">Date: 2026.03.12</div>
             <div class="text-sm text-gray-500 mono">
-                <span class="lang-ja">筆者: 名前</span>
-                <span class="lang-en">Author: Name</span>
+                <span class="lang-ja">筆者: 指原 啓志</span>
+                <span class="lang-en">Author: Keishi Sashihara</span>
             </div>
         </header>
         <article>
             <!-- Snippet: Text Section -->
             <section class="mt-12">
                 <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
-                    <span class="lang-ja">セクションの見出し</span><span class="lang-en">Section Heading</span>
+                    <span class="lang-ja">はじめに</span><span class="lang-en">Intoduction</span>
                 </h2>
-                <p class="lang-ja">日本語の段落です。テキストをここに記述します。</p>
-                <p class="lang-en">This is an English paragraph. Text goes here.</p>
             </section>
-            <!-- Snippet: MathJax Block -->
-            <div class="math-block">
-                \[ E = mc^2 \]
-            </div>
-            <!-- Snippet: Image/Graph Block -->
-            <div class="my-12">
-                <div class="w-full bg-gray-100 rounded-lg border">
-                    <img src="../assets/images/your-graph.png" alt="Graph Description">
+                <p class="lang-ja">この記事では、whitespaceという難解言語のインタプリタをpythonで作ってみたので、それを紹介しようと思います。whitespaceはそのプログラムがスペースとタブ、そして改行のみで構成されているのが最大の特徴です。そのため、コードを見ただけでは何も書いているようには見えません。このページの最後にHello, World!を出力させるサンプルコードを載せています。見ると色々思う所はあると思うのですが、これでちゃんと動くのってめちゃくちゃかっこよくないですか？？ 苦労して情報に辿り着くというこのサイトの理念にもピッタリです。それに、一見意味のないように思える場所から情報を抜き出すのは、なんだか科学者に必要な態度のような気がして、その意味でも一目惚れした言語です。実はインタプリタはいくつも配布されているのですが、それらがCやpythonで書かれているようでしたので、それは自分で作るしかないだろうと思い至り、頑張って書きました。是非、遊んでいただけると嬉しいです。</p>
+
+                <p class="lang-ja">もし読者の中に"高級言語は甘え"と考える過激派な人(もちろん褒め言葉です)がいらっしゃれば、自分でプログラムを書いてみてください。そしてよければ、共有してくれませんか？？ 私が言うのもおかしいですが、この言語で何かプログラムを書くのは正直、正気の沙汰ではないです。デバックのしにくさが異常で、本当にイライラします。おそらくとても贅沢で優雅で、そしてこの上なく無駄な時間を過ごせます。過激派の皆さん、お待ちしています！
+                </p>
+
+                <p class="lang-en">
+In this article, I introduce an interpreter for the esoteric programming language <em>Whitespace</em> that I implemented in Python. The most distinctive feature of Whitespace is that its programs consist only of spaces, tabs, and line breaks. As a result, when you look at the code, it appears as if nothing is written at all.
+</p>
+
+<p class="lang-en">
+At the end of this page, I have included a sample program that outputs “Hello, World!”. You may have various reactions when you see it, but isn’t it incredibly cool that something like that actually works? It also fits perfectly with the philosophy of this site—reaching information only after some effort. Extracting information from places that seem meaningless at first glance somehow feels like the kind of attitude scientists should have, and that was another reason why I immediately fell in love with this language.
+</p>
+
+<p class="lang-en">
+In fact, several interpreters for Whitespace have already been distributed, but since many of them are written in C or Python, I figured I should try writing one myself. So I went ahead and implemented it. I would be very happy if you try playing with it.
+</p>
+
+<p class="lang-en">
+If any readers here belong to the rather extreme camp that believes “high-level languages are for the weak” (of course, I mean that as a compliment), please try writing your own program. And if you do, would you consider sharing it?
+</p>
+
+<p class="lang-en">
+It may sound strange coming from me, but honestly, writing programs in this language is not a sane activity. Debugging is extraordinarily difficult and genuinely frustrating. However, it will probably allow you to spend a very luxurious, elegant, and utterly pointless amount of time. To all the extremists out there—I look forward to seeing what you create!
+</p>
+
+            <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                <span class="lang-ja">レポジトリへのリンク</span><span class="lang-en">The Link for My Repository</span>
+            </h2>
+
+            <a href="https://github.com/K-Sashihara/mywhitespace" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">https://github.com/K-Sashihara/mywhitespace</a>
+
+            <!-- Whitespace Command Reference Section -->
+            <section class="my-12">
+                <h2 class="text-xl font-bold mb-6 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">Whitespace 命令体系リファレンス</span>
+                    <span class="lang-en">Whitespace Instruction Reference</span>
+                </h2>
+                
+                <p class="lang-ja mb-4">Whitespaceの命令は、IMP（Instruction Modification Parameter）でカテゴリを選択し、それに続くコマンドで具体的な動作を決定します。凡例：<code>S</code>=Space, <code>T</code>=Tab, <code>L</code>=Linefeed</p>
+                <p class="lang-en mb-4">Whitespace instructions consist of an IMP (Instruction Modification Parameter) followed by a command. Legend: <code>S</code>=Space, <code>T</code>=Tab, <code>L</code>=Linefeed</p>
+
+                <div class="overflow-x-auto border border-gray-200 rounded-lg">
+                    <table class="w-full text-left border-collapse text-sm mono">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-200">
+                                <th class="p-4 font-bold">IMP</th>
+                                <th class="p-4 font-bold">Command</th>
+                                <th class="p-4 font-bold">Param</th>
+                                <th class="p-4 font-bold">
+                                    <span class="lang-ja">内容</span><span class="lang-en">Description</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <!-- Stack Manipulation -->
+                            <tr>
+                                <td class="p-4 align-top border-r border-gray-100" rowspan="6">S <br><span class="text-[10px] text-gray-400 font-sans italic">(Stack)</span></td>
+                                <td class="p-4">S</td>
+                                <td class="p-4">[Num]</td>
+                                <td class="p-4">
+                                    <span class="lang-ja">数値をスタックに積む</span>
+                                    <span class="lang-en">Push the number onto the stack</span>
+                                </td>
+                            </tr>
+                            <tr><td class="p-4">L S</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">トップを複製</span><span class="lang-en">Duplicate top item</span></td></tr>
+                            <tr><td class="p-4">T S</td><td class="p-4">[Num]</td><td class="p-4"><span class="lang-ja">n番目の値をトップにコピー</span><span class="lang-en">Copy n-th item to top</span></td></tr>
+                            <tr><td class="p-4">L T</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">トップ2つを入れ替え</span><span class="lang-en">Swap top two items</span></td></tr>
+                            <tr><td class="p-4">L L</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">トップを捨てる</span><span class="lang-en">Discard top item</span></td></tr>
+                            <tr><td class="p-4">T L</td><td class="p-4">[Num]</td><td class="p-4"><span class="lang-ja">トップを残し下n個を捨てる</span><span class="lang-en">Slide n items off</span></td></tr>
+
+                            <!-- Arithmetic -->
+                            <tr class="bg-gray-50/50">
+                                <td class="p-4 align-top border-r border-gray-100" rowspan="5">T S <br><span class="text-[10px] text-gray-400 font-sans italic">(Math)</span></td>
+                                <td class="p-4">S S</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">加算 (+)</span><span class="lang-en">Addition</span></td>
+                            </tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">S T</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">減算 (-)</span><span class="lang-en">Subtraction</span></td></tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">S L</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">乗算 (*)</span><span class="lang-en">Multiplication</span></td></tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">T S</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">整数除算 (/)</span><span class="lang-en">Integer Division</span></td></tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">T T</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">剰余 (Mod)</span><span class="lang-en">Modulo</span></td></tr>
+
+                            <!-- Heap -->
+                            <tr>
+                                <td class="p-4 align-top border-r border-gray-100" rowspan="2">T T <br><span class="text-[10px] text-gray-400 font-sans italic">(Heap)</span></td>
+                                <td class="p-4">S</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">保存 (addr, valをpopして格納)</span><span class="lang-en">Store in heap</span></td>
+                            </tr>
+                            <tr><td class="p-4">T</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">取得 (addrをpopして値をpush)</span><span class="lang-en">Retrieve from heap</span></td></tr>
+
+                            <!-- Flow Control -->
+                            <tr class="bg-gray-50/50">
+                                <td class="p-4 align-top border-r border-gray-100" rowspan="7">L <br><span class="text-[10px] text-gray-400 font-sans italic">(Flow)</span></td>
+                                <td class="p-4">S S</td><td class="p-4">[Lbl]</td><td class="p-4"><span class="lang-ja">ラベル定義</span><span class="lang-en">Mark label</span></td>
+                            </tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">S T</td><td class="p-4">[Lbl]</td><td class="p-4"><span class="lang-ja">サブルーチン呼び出し</span><span class="lang-en">Call subroutine</span></td></tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">S L</td><td class="p-4">[Lbl]</td><td class="p-4"><span class="lang-ja">無条件ジャンプ</span><span class="lang-en">Jump unconditionally</span></td></tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">T S</td><td class="p-4">[Lbl]</td><td class="p-4"><span class="lang-ja">0ならジャンプ</span><span class="lang-en">Jump if zero</span></td></tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">T T</td><td class="p-4">[Lbl]</td><td class="p-4"><span class="lang-ja">負ならジャンプ</span><span class="lang-en">Jump if negative</span></td></tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">T L</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">サブルーチン終了</span><span class="lang-en">End subroutine</span></td></tr>
+                            <tr class="bg-gray-50/50"><td class="p-4">L L</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">プログラム終了</span><span class="lang-en">End program</span></td></tr>
+
+                            <!-- I/O -->
+                            <tr>
+                                <td class="p-4 align-top border-r border-gray-100" rowspan="4">T L <br><span class="text-[10px] text-gray-400 font-sans italic">(I/O)</span></td>
+                                <td class="p-4">S S</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">文字出力</span><span class="lang-en">Output character</span></td>
+                            </tr>
+                            <tr><td class="p-4">S T</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">数値出力</span><span class="lang-en">Output number</span></td></tr>
+                            <tr><td class="p-4">T S</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">文字入力しヒープへ</span><span class="lang-en">Read character</span></td></tr>
+                            <tr><td class="p-4">T T</td><td class="p-4">-</td><td class="p-4"><span class="lang-ja">数値入力しヒープへ</span><span class="lang-en">Read number</span></td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <p class="text-center text-xs text-gray-400 mt-4 mono">Fig 1. Caption for the figure</p>
-            </div>
-            <!-- Snippet: Code Block -->
-            <pre><code>
+            </section>
+
+            <p class="lang-ja">注意して欲しいのは、演算はスタックの2個目の値が先で、1個目の値を後に持ってくるということです。つまり引き算を行う命令<code>T</code><code>S</code><code>S</code><code>T</code>がなされた場合、python風に書くと、以下のように処理されます。</p>
+            <p class="lang-en">
+One thing to be careful about is that arithmetic operations use the second value on the stack first, followed by the first value. In other words, if the subtraction instruction <code>T</code><code>S</code><code>S</code><code>T</code> is executed, it is processed roughly as follows (written in a Python-like style).
+</p>
+
+
+<pre><code>
+    b = stack.pop()
+    a = stack.pop()
+    stack.append(a-b)
+</code></pre>
+
+<p></p>
+
+<p class="lang-ja">スタックは、データを"後入れ先出し"と言う順序で管理するデータ構造です。積み上げられた本によく似ています。それに対して、ヒープというのはプログラムの動作中に使われる動的に確保、解放されるメモリ領域です。アドレスと値がセットになって保管され、プログラム中でアドレスを参照することで対応する値を取得できます。フロー制御は、プログラムの命令の順序を変えることができます。プログラムは書かれた命令を順にこなしていきますが、条件分岐を行う際や特定の処理を行う処理群をまとめている場合、命令を飛ばしたり、別の命令群を先に実行してから帰ってくる必要があります。フロー制御を組み合わせることで、こういった処理を可能になります。かなりざっくりした説明になってしまいましたが、ここら辺の内容に興味がある方は各自で調べてみてください。</p>
+<p class="lang-en">
+A stack is a data structure that manages data in a “last in, first out” (LIFO) order. It is very similar to a pile of stacked books. In contrast, a heap is a region of memory that is dynamically allocated and released during the execution of a program. Data are stored as pairs of addresses and values, and the program can retrieve a value by referring to its corresponding address.
+</p>
+
+<p class="lang-en">
+Flow control allows a program to change the order in which instructions are executed. Normally, a program executes instructions sequentially as they are written. However, when performing conditional branching or when grouping certain operations together, it becomes necessary to skip some instructions or temporarily jump to another block of instructions and then return later. By combining different flow control operations, such behavior becomes possible.
+</p>
+
+<p class="lang-en">
+This explanation is admittedly quite rough, but if you are interested in these topics, I encourage you to explore them further on your own.
+</p>
+
+<h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+    <span class="lang-ja">Hello, World! のサンプルプログラム</span><span class="lang-en">Sample program of "Hello, World!"</span>
+</h2>
+
+<pre><code>
     
-   	   	 	
-		    	
-   		 			 
-		    	 
-   			 	  
-		    		
-   		  	 	
-		    	  
-   			  	 
-		    	 	
-   	     
-		    		 
-   		    	
-		    			
-   	     
-		    	   
-   		 			 
-		    	  	
-   			 	 	
-		    	 	 
-   		 		 	
-		    	 		
-   		   	 
-		    		  
-   		  	 	
-		    		 	
-   			  	 
-		    			 
-   			 	 
-		    				
-   	     
-		    	    
     
-		    	 	  
-   	     
-		    	 	 	
-   	 		 	
-		    	 		 
-   					 
-		    	 			
-   	     
-		    		   
     
-		     
-
- 	 			 			 			  	  		 	  	 			 	   		  	 	
-   		  	  
-	
-		   		  	  
-			   	
-   		
-   	 
-
- 	 		 	    		    	 		 			  		 				 		 	  	
-
-
-
-
-   		 	    		    	 		 			  		 				 		 	  	
-   		  			
- 
-			    		  		 
- 
-			    		  	 	
- 
-			    		  	  
- 
-			    		  	  
-			
-	  		  	 	 		 			  		  	   		 	    		    	 		 			  		 				 		 	  	
-   		  	  
-			   		  	 	
-			   		  		 
-			   		  			
-			   		  	  
-			   	
-	  	   		  	 	
-			   		  			
-			   		  		 
-			
- 	 		 	    		    	 		 			  		 				 		 	  	
-   		  			
- 
-			    		  		 
- 
-			    		  	 	
- 
-			    		  	  
- 
-			    		  	 	
-				
- 	   	 	  
-
- 	 			 			 			  	  		 	  	 			 	   		  	 	
-   		  		 
-				
- 	
- 	 		 			  		  	 	 			 			 		 		   		 	  	 		 			  		  	 	
-   		  	  
-			   		  	 	
-			   		  		 
-			   		  			
-			   		  	  
-			   	
-	  	   		  			
-			   		  		 
-			   		  	 	
-			
- 	 		 	    		    	 		 			  		 				 		 	  	
-   		  			
- 
-			    		  		 
- 
-			    		  	 	
- 
-			    		  	  
- 
-			 
-   		  	 	 		 			  		  	   		 	    		    	 		 			  		 				 		 	  	
-
-	
-
-   		    	 		  	   		  	  
-	   
-	
-
-   			 			 			  	  		 	  	 			 	   		  	 	
- 
- 			 
- 
-	  			 			 			  	  		 	  	 			 	   		  	 	 	 					 		  	 	 		 			  		  	  
-	
-     	
-	   
- 
- 			 			 			  	  		 	  	 			 	   		  	 	
-
-   			 			 			  	  		 	  	 			 	   		  	 	 	 					 		  	 	 		 			  		  	  
- 
-
- 
-
-
-	
-
-   			  	  		  	 	 		    	 		  	  
- 
-  
- 	
-	 			 
-    	 	 
-	  	
-	  			  	  		  	 	 		    	 		  	   	 					 		  	 	 		 			  		  	  
- 
-
-   	
-	   
- 
- 			  	  		  	 	 		    	 		  	  
-
-   			  	  		  	 	 		    	 		  	   	 					 		  	 	 		 			  		  	  
- 
-
-   	
-	       
-		 
-	
-
-   		 			  		  	 	 			 			 		 		   		 	  	 		 			  		  	 	
-   	 	 
-   		 	
-	
-  	
-  
-	
-
-
-
-
-            </code></pre>
-        </article>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</code></pre>
+</article>
     </main>
     <!-- JavaScript -->
     <script>
