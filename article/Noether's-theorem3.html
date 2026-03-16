@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Roboto+Mono&display=swap');
+        body { font-family: 'Noto Serif JP', serif; } .mono { font-family: 'Roboto Mono', monospace; }
+        html[lang="en"] .lang-ja { display: none; } html[lang="ja"] .lang-en { display: none; }
+        .lang-btn-active { font-weight: bold; text-decoration: underline; }
+        article p { margin-bottom: 1.5rem; color: #374151; line-height: 1.8; }
+        .math-block { background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0; overflow-x: auto; overflow-y: hidden; min-height: 0; }
+        .math-block .MathJax_Display { margin: 0; }
+        code { font-family: 'Roboto Mono', monospace; background: #1f2937; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+        pre { background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin: 2rem 0; font-size: 0.85em; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Header -->
+    <header class="max-w-3xl mx-auto pt-12 px-6">
+        <div class="flex justify-between items-center mb-12">
+            <a href="../index.html" class="text-xs uppercase tracking-widest border-b border-gray-900 pb-1 hover:text-gray-500 transition">← Back to the top page</a>
+            <div class="text-xs mono space-x-2">
+                <button onclick="setLanguage('ja')" id="btn-ja" class="lang-btn-active">JP</button>
+                <span class="text-gray-300">/</span>
+                <button onclick="setLanguage('en')" id="btn-en">EN</button>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-6 pb-24">
+        <!-- ここに記事コンテンツを追加 -->
+        <!-- Snippet: Article Header -->
+        <header class="mb-16">
+            <div class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 mono">Physics</div>
+            <h1 class="text-3xl font-bold mb-6 leading-tight">
+                <span class="lang-ja">ネーターの定理 part3</span>
+                <span class="lang-en">Noether's-theorem part3 </span>
+            </h1>
+            <div class="text-sm text-gray-500 mono">Date: 2026.03.10</div>
+            <div class="text-sm text-gray-500 mono">
+                <span class="lang-ja">筆者: 髙田 和毅</span>
+                <span class="lang-en">Author: Kazuki Takata</span>
+            </div>
+        </header>
+        <article>
+            <!-- Snippet: Text Section -->
+            <section class="mt-12">
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">はじめに</span><span class="lang-en">Introduction</span>
+                </h2>
+                <p class="lang-ja">
+                    前回までの記事ではネーターの定理を作用、ラグランジアンの二つの対称性から説明していました。
+                    今回の記事ではそんな二つの対称性の関係、そして完全に対称性(不変性)がなくても作用やラグランジアン
+                    が準不変性を持つとき、ネーターチャージに似た量が保存量としてふるまうことを説明します。
+                    <br>
+                    ※ネーターの定理part1,part2の記事を読むことをおすすめします。
+                </p>
+                <p class="lang-en">
+                    In the previous articles, we explained Noether's theorem from the perspective of two symmetries: the symmetry of the action and the symmetry of the Lagrangian. In this article, we will explain the relationship between these two symmetries. Furthermore, we will demonstrate that even without perfect symmetry (invariance), when the action or Lagrangian exhibits quasi-invariance, a quantity similar to the Noether charge behaves as a conserved quantity.
+                    <br>
+                    *We recommend reading the articles on Noether's theorem part 1 and part 2.
+                </p>
+            </section>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                     <span class="lang-ja">ラグランジアンと作用の対称性の関係</span><span class="lang-en">Relationship between Symmetries of the Lagrangian and the Action</span>
+                </h2>
+                <p class="lang-ja">
+                    早速これらの対称性の関係について説明します。結論から言うと作用の対称性のほうがラグランジアンの対称性
+                    よりも広い主張となっております。つまりラグランジアンが対称性を持つとき、常に作用も対称性を持っている
+                    ということになります。このことを確認してみましょう。まずラグランジアンの対称性について復習します。
+                    与えられたラグランジアン\(L(q,\dot{q},t)\)に対して、変換を表す関数\(T(t),u^i(q,t)\)を定めた時、
+                    以下の式(1)を満たすときラグランジアンは定めた変換に対して対称性を持つというのでした。
+                </p>
+                <p class="lang-en">
+                    Let's dive into the relationship between these symmetries. To state the conclusion first, 
+                    the symmetry of the action is a broader concept than the symmetry of the Lagrangian. In 
+                    other words, when a Lagrangian has symmetry, the action always has symmetry as well. Let's 
+                    verify this. First, let's review the symmetry of the Lagrangian. For a given Lagrangian 
+                    \(L(q,\dot{q},t)\), when we define functions \(T(t),u^i(q,t)\) representing a transformation,
+                     the Lagrangian is said to have symmetry with respect to the defined transformation if it
+                      satisfies the following equation (1).
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L\left(q+\epsilon u, \dot{q} - \epsilon \dot{q}\dot{T}(t) + \epsilon \left( \frac{\partial u}{\partial q^j}\dot{q}^j + \frac{\partial u}{\partial t} \right),t+\epsilon T(t)\right)=L(q,\dot{q},t)\tag{1}
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    この\(q^i,\dot{q}^i\)にラグランジュ方程式の解についての\(q^i(t),\dot{q}^i(t)\)を代入したものはpart2の式(9)で
+                    出てきており、以下に再掲します。
+                </p>
+                <p class="lang-en">
+                    Substituting the solutions of the Euler-Lagrange equations, \(q^i(t)\) and \(\dot{q}^i(t)\), 
+                    into \(q^i\) and \(\dot{q}^i\) yields equation (9) from part 2, which is reproduced below.
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                   L(q(t)+\epsilon Q(t),\dot{q}(t)-\epsilon \dot{q}(t)\dot{T}(t)+\epsilon \dot{Q}(t),t+\epsilon T(t))=L(q(t),\dot{q}(t),t) \tag{2}
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    ラグランジアンの対称性を考えるとき、\(\dot{T}(t)=0\)を扱うため式(2)の左辺に\(1+\epsilon \dot{T}(t)\)をかけても\(=\)で結ばれます。
+                    つまり以下の式が成り立ちます。
+                </p>
+                <p class="lang-en">
+                    When considering the symmetry of the Lagrangian, since we assume \(\dot{T}(t)=0\), multiplying the left side of equation 
+                    (2) by \(1+\epsilon \dot{T}(t)\) still preserves the equality. Thus, the following equation holds.
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                   L(q(t)+\epsilon Q(t),\dot{q}(t)-\epsilon \dot{q}(t)\dot{T}(t)+\epsilon \dot{Q}(t),t+\epsilon T(t))(1+\epsilon \dot{T}(t))=L(q(t),\dot{q}(t),t)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    ここで両辺を\(t\)である時刻\(t_1\)から\(t_2\)まで積分してみます。この時、左辺の積分はpart1の式(11)の2行目に該当することが分かります。
+                    そしてその積分は式(11)の1行目の等しいわけですから以下の式を得ます。
+                </p>
+                <p class="lang-en">
+                    Now, let's integrate both sides with respect to time \(t\) from \(t_1\) to \(t_2\). We can see that the integral on
+                     the left side corresponds to the second line of equation (11) in part 1. Since that integral is equal to the first line of equation (11),
+                      we obtain the following equation.
+                </p>
+                <div class="math-block">
+                    \begin{align} 
+                    \int_{t_1'}^{t_2'} L(q'(t'), \dot{q}'(t'), t') \, dt' = \int_{t_1}^{t_2} L(q(t), \dot{q}(t), t) \, dt 
+                    \end{align}
+                </div> 
+                <p class="lang-ja">
+                    この等式はまさに作用が座標変換に対して対称性を持っていることを示しています。したがってラグランジアンの対称性と作用の対称性は全く別物ではないことが分かります。
+                </p>
+                <p class="lang-en">
+                    This equation precisely demonstrates that the action has symmetry with respect to coordinate transformations. Therefore, we can understand that
+                     the symmetry of the Lagrangian and the symmetry of the action are not entirely distinct concepts.
+                </p> 
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">作用およびラグランジアンの準不変性</span><span class="lang-en">Quasi-invariance of the Action and Lagrangian</span>
+                </h2>
+                <p class="lang-ja">
+                    今まで、ネーターの定理を得るのに対称性が重要であることを述べてきました。しかし対称性は強い条件であり、なかなか対称性を持たないこともあると思います。
+                    そこで完全に対称性を持っていないが以下に述べる準不変性(対称性という言葉に合わせるとするなら準対称性というべきなのかもしれません)を満たすとき、ネーター
+                    チャージにおまけの量を付け加えたような量が保存すること述べていきたいと思います。まず作用の準不変性から述べていきます。作用の対称性とは以下に定義される
+                    作用\(S,S'\)が等しい時のことを指すのでした。
+                </p>
+                <p class="lang-en">
+                    So far, we have discussed the importance of symmetry in deriving Noether's theorem. However, symmetry is a strong condition, and there 
+                    are cases where a system does not naturally possess it. Therefore, I would like to explain that even if a system does not have perfect 
+                    symmetry, when it satisfies the "quasi-invariance" described below (perhaps it should be called "quasi-symmetry" to align with the term 
+                    symmetry), a quantity resembling the Noether charge with an additional term is conserved. First, let's discuss the quasi-invariance of 
+                    the action. The symmetry of the action refers to the case where the actions \(S\) and \(S'\), defined below, are equal.
+                </p>
+                <div class="math-block">
+                    \begin{align} 
+                    S'=\int_{t_1'}^{t_2'} L(q'(t'), \dot{q}'(t'), t') \, dt'\,,\,S=\int_{t_1}^{t_2} L(q(t), \dot{q}(t), t) \, dt 
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    そして作用が対称性を持つときpart1の式(16)を得ることによってネーターチャージが保存量となるのでした。実はpart1の式(8)からpart1の式(16)までの議論を
+                    注意深く追うと、作用が対称性を持つこととは関係なしにpart1の式(16)の左辺が\(\delta S := S'-S\)という量と等しいことが分かります。したがってもし
+                    作用が対称性を持つとき、\(\delta S\)が0となり、\(\delta S\)と元々等しい式(16)の左辺が0になるのです。このことを念頭に置いて、
+                    作用が対称性を持っていないが(\(\delta S \ne 0\)ということ)以下のような関係式が成り立つような時間の関数\(F(t)\)が存在する場合を考えてみます。
+                </p>
+                <p class="lang-en">
+                    When the action has symmetry, obtaining equation (16) from part 1 shows that the Noether charge becomes a conserved quantity. In 
+                    fact, if we carefully follow the discussion from equation (8) to equation (16) in part 1, we can see that the left side of equation 
+                    (16) is equal to the quantity \(\delta S := S'-S\), regardless of whether the action has symmetry or not. Therefore, if the action
+                     has symmetry, \(\delta S\) becomes 0, and the left side of equation (16), which is inherently equal to \(\delta S\), also becomes
+                      0. Keeping this in mind, let's consider a case where the action does not have symmetry (meaning \(\delta S \ne 0\)), but there 
+                      exists a function of time \(F(t)\) such that the following relationship holds.
+                </p>
+                <div class="math-block">
+                    \begin{align} 
+                     \delta S = \int_{t_1}^{t_2}\frac{d F}{dt}\,dt
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    これが成り立つことを作用が変換に対して準不変であると定義します。ここで、\(\delta S\)はpart1の左辺と等しいので以下の式を得ます。
+                </p>
+                <p class="lang-en">
+                    When this holds, we define the action to be quasi-invariant under the transformation. Here, since \(\delta S\) is 
+                    equal to the left side of the equation in part 1, we obtain the following equation.
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                     \int_{t_1}^{t_2}  \frac{d}{dt} \left[ \frac{\partial L}{\partial \dot{q}^i} \epsilon Q^i(t)  -  \left( \frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t)  - L(q(t), \dot{q}(t), t) \right)\epsilon T(t) \right] dt = \int_{t_1}^{t_2}\frac{d F}{dt}\,dt 
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    つまりこの式はネーターチャージ\(J(t)\)自体は保存しないが、そこから\(F(t)\)を引いた
+                </p>
+                <p class="lang-en">
+                    In other words, this equation means that the Noether charge \(J(t)\) itself is not conserved, but the 
+                    quantity obtained by subtracting \(F(t)\) from it,
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                     \frac{\partial L}{\partial \dot{q}^i} \epsilon Q^i(t)  -  \left( \frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t)  - L(q(t), \dot{q}(t), t) \right)\epsilon T(t) - F(t)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    という量が保存するということを意味します。したがって作用は完全に対称性を持っていなくても似たような量が保存する場合があるのです。<br><br>
+                    次にラグランジアンの準不変性についても見てみます。この準不変性の議論も作用の場合と似ています。改めてラグランジアンの対称性から
+                    保存量を得る論法は以下のようになります。まずラグランジアンが対称性を持つこととは関係なしに(でも\(\dot{T}(t)=0\)は前提とする)式(1)の左辺と右辺の差を\(\delta L(q,\dot{q},t)\)
+                    とおいてみます(ラグランジアンに対称性がある時はこの量は0となる)。そしてこの\(q^i,\dot{q}^i\)にラグランジュ方程式の解についての\(q^i(t),\dot{q}^i(t)\)を代入した\(\delta L(q(t),\dot{q}(t),t)\)
+                    を考えてみます。ここで、\(\dot{T}(t)=0\)を前提にしていることからpart2の式(9)からpart2の式(11)までの議論を注意深く追うと\(\delta L(q(t),\dot{q}(t),t)\)がラグランジアンの対称性
+                    とは関係なしにpart2の式(11)の時間微分、すなわちネーターチャージの時間微分\(\dot{J}(t)\)と等しいことが分かります。まとめるとラグランジアンの対称性にかかわらず\(\dot{J}(t)=\delta L(q(t),\dot{q}(t),t)\)
+                    が成り立っており、もしラグランジアンに対称性があれば\(\delta L(q,\dot{q},t)=0\)となるため\(\delta L(q(t),\dot{q}(t),t)=0\)が成り立ち、その結果\(\dot{J}(t)=\delta L(q(t),\dot{q}(t),t)=0\)となるわけです。
+                    <br>長くなりましたが準不変性の議論に移ります。ラグランジアンが対称性を持っていないが以下のような関係式が成り立つような\(q^i,t\)の関数\(F(q,t)\)がする場合
+                    を考えてみます。
+                </p>
+                <p class="lang-en">
+                    is a conserved quantity. Therefore, even if the action does not have perfect symmetry, a similar quantity may still be conserved.<br><br>
+                    Next, let's look at the quasi-invariance of the Lagrangian. The discussion for this quasi-invariance is similar to that of the action. To reiterate, the logic for obtaining a conserved 
+                    quantity from the symmetry of the Lagrangian is as follows. First, regardless of whether the Lagrangian has symmetry (but assuming \(\dot{T}(t)=0\)), let's define the difference between 
+                    the left and right sides of equation (1) as \(\delta L(q,\dot{q},t)\) (this quantity is 0 when the Lagrangian has symmetry). Then, consider \(\delta L(q(t),\dot{q}(t),t)\) by substituting 
+                    the solutions of the Euler-Lagrange equations, \(q^i(t)\) and \(\dot{q}^i(t)\), for \(q^i\) and \(\dot{q}^i\). Here, since we assume \(\dot{T}(t)=0\), carefully following the discussion from 
+                    equation (9) to equation (11) in part 2 reveals that \(\delta L(q(t),\dot{q}(t),t)\) is equal to the time derivative of equation (11) in part 2, namely the time derivative of the Noether charge, 
+                    \(\dot{J}(t)\), regardless of the Lagrangian's symmetry. In summary, \(\dot{J}(t)=\delta L(q(t),\dot{q}(t),t)\) holds regardless of the Lagrangian's symmetry. If the Lagrangian has symmetry, 
+                    \(\delta L(q,\dot{q},t)=0\), so \(\delta L(q(t),\dot{q}(t),t)=0\) holds, and consequently, \(\dot{J}(t)=\delta L(q(t),\dot{q}(t),t)=0\).<br>
+                    Moving on to the discussion of quasi-invariance: let's consider the case where the Lagrangian does not have perfect symmetry, but there is a function \(F(q,t)\) of \(q^i\) and \(t\) such 
+                    that the following relationship holds.
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    \delta L(q,\dot{q},t) = \frac{\partial F}{\partial q^i}\dot{q}^i + \frac{\partial F}{\partial t} \tag{3}
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    これが成り立つことをラグランジアンが変換に対して準不変であると定義します。ここで式(3)で\(q^i,\dot{q}^i\)にラグランジュ方程式の解についての\(q^i(t),\dot{q}^i(t)\)を代入
+                    すると\(\dot{J}(t)=\delta L(q(t),\dot{q}(t),t)\)と連鎖律から以下の式を得ます。
+                </p>
+                <p class="lang-en">
+                    When this holds, we define the Lagrangian to be quasi-invariant under the transformation. Substituting the solutions of the Euler-Lagrange equations, \(q^i(t)\) and \(\dot{q}^i(t)\), into
+                     \(q^i\) and \(\dot{q}^i\) in equation (3), we obtain the following equation using \(\dot{J}(t)=\delta L(q(t),\dot{q}(t),t)\) and the chain rule.
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    \dot{J}(t)=\frac{d}{dt}F(q(t),t)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    ここで式(3)の右辺のような複雑な形を準不変の定義に採用したのは連鎖律でまとめることができるからです。さて、この式から\(J(t)\)自体は保存しないが
+                    そこから\(F(q(t),t)\)を引いた
+                </p>
+                <p class="lang-en">
+                    The reason we adopted the complex form on the right side of equation (3) for the definition of quasi-invariance is that it can be cleanly combined using the 
+                    chain rule. Now, from this equation, we can see that \(J(t)\) itself is not conserved, but the quantity obtained by subtracting \(F(q(t),t)\) from it,
+                </p>
+                 <div class="math-block">
+                    \begin{align}
+                    J(t)-F(q(t),t)=\frac{\partial L}{\partial \dot{q}^i} \epsilon Q^i(t)  -  \left( \frac{\partial L}{\partial \dot{q}^i} \dot{q}^i(t)  - L(q(t), \dot{q}(t), t) \right)\epsilon T(t) - F(q(t),t)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    という量が保存することが分かります。したがって作用は完全に対称性を持っていなくても似たような量が保存する場合があるのです。<br><br>
+                    以上のようにラグランジアンや作用が完全に対称性を持たなくても準不変なら保存量が存在することが分かりました。実は最初のセクションで述べた
+                    ことと関連して、ラグランジアンが準不変なら作用も準不変であることが分かります。しかし似たような議論となるのでここでは省略させていただきます。
+                </p>
+                <p class="lang-en">
+                    is a conserved quantity. Therefore, even if the action does not have perfect symmetry, a similar quantity may still be conserved.<br><br>
+                    As shown above, we have found that even if the Lagrangian or the action does not possess perfect symmetry, conserved quantities exist if they are quasi-invariant.
+                     In fact, related to what was stated in the first section, we can show that if the Lagrangian is quasi-invariant, the action is also quasi-invariant. However, 
+                     since the argument is similar, we will omit it here.
+                </p>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">準不変の具体例</span><span class="lang-en">Specific Example of Quasi-invariance</span>
+                </h2>
+                <p class="lang-ja">
+                    ここでラグランジアンが準不変である例を一つ紹介します。part2の空間並進対称性の部分で出てきたラグランジアンを考えます。
+                </p>
+                <p class="lang-en">
+                    Here, let's introduce an example where the Lagrangian is quasi-invariant. Consider the Lagrangian that appeared in the section
+                     on spatial translational symmetry in part 2.
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    L(x^1,x^2,\dot{x}^1,\dot{x}^2)=\frac{1}{2}m_1(\dot{x}^1)^2+\frac{1}{2}m_2(\dot{x}^2)^2-U(x^2-x^1)
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    ここで座標変換として各粒子の座標を\(\epsilon\)だけずらすことで全運動量\(m_1\dot{x}^1+m_2\dot{x}^2\)が保存することをpart2で見ましたが
+                    今度はガリレイ変換を考えてみます。つまり\(u^1(x,t)=u^2(x,t)=-vt,T(t)=0\)とした変換で\(x'^1=x^1-\epsilon vt,x'^2=x^2-\epsilon vt,t'=t\)
+                    を意味します(part2の式(5)から\(\dot{x}'^1=\dot{x}^1-\epsilon v,\dot{x}'^2=\dot{x}^2-\epsilon v\)となります)。
+                    この時の\(\delta L(x,\dot{x},t)\)を\(\epsilon\)の一次で計算すると
+                </p>
+                <p class="lang-en">
+                    In part 2, we saw that by shifting the coordinates of each particle by \(\epsilon\) as a coordinate transformation, the total 
+                    momentum \(m_1\dot{x}^1+m_2\dot{x}^2\) is conserved. This time, let's consider a Galilean transformation. That is, a transformation 
+                    with \(u^1(x,t)=u^2(x,t)=-vt\) and \(T(t)=0\), which means \(x'^1=x^1-\epsilon vt\), \(x'^2=x^2-\epsilon vt\), and \(t'=t\) (from equation 
+                    (5) in part 2, we get \(\dot{x}'^1=\dot{x}^1-\epsilon v\) and \(\dot{x}'^2=\dot{x}^2-\epsilon v\)). Calculating \(\delta L(x,\dot{x},t)\) 
+                    in this case to the first order of \(\epsilon\), we get:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    \delta L(x,\dot{x},t) &= \frac{1}{2}m_1(\dot{x}^1-\epsilon v)^2+\frac{1}{2}m_2(\dot{x}^2-\epsilon v)^2-\frac{1}{2}m_1(\dot{x}^1)^2-\frac{1}{2}m_2(\dot{x}^2)^2\\
+                    &=m_1\epsilon v\dot{x}^1+m_2\epsilon v\dot{x}^2\\
+                    &=\left[\frac{\partial}{\partial x^1}\left(\epsilon m_1vx^1+\epsilon m_2vx^2\right)\right]\dot{x}^1+\left[\frac{\partial}{\partial x^2}\left(\epsilon m_1vx^1+\epsilon m_2vx^2\right)\right]\dot{x}^2
+                   \end{align}
+                </div>
+                <p class="lang-ja">
+                    このように式変形されます。これはラグランジアンがガリレイ変換に対して\(F(x,t)=\epsilon m_1vx^1+\epsilon m_2vx^2\)とするような準不変性があることを意味します。したがって保存量は\(u^1(x,t)=u^2(x,t)=-vt,T(t)=0\)
+                    とした時のネーターチャージから\(F(x(t),t)\)を引いたものであり、計算を実行すると
+                </p>
+                <p class="lang-en">
+                    It is transformed as follows. This means that the Lagrangian has quasi-invariance with respect to the Galilean transformation, where \(F(x,t)=\epsilon m_1vx^1+\epsilon m_2vx^2\). Therefore, 
+                    the conserved quantity is the Noether charge when \(u^1(x,t)=u^2(x,t)=-vt\) and \(T(t)=0\), minus \(F(x(t),t)\). Performing the calculation, we get:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    {J}(t)-F(x(t),t)&=-m_1\dot{x}^1(t)\epsilon vt-m_2\dot{x}^2(t)\epsilon vt-(\epsilon m_1vx^1+\epsilon m_2vx^2)\\
+                    &=-\epsilon v[m_1x^1(t)+m_2x^2(t)-(m_1\dot{x}^1(t)+m_2\dot{x}^2(t))t]
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    これが保存量としてふるまうことになります。ここで定数である\(-\epsilon v(m_1+m_2)\)で割ったものも保存量としてふるまい、それは以下の量となります。
+                </p>
+                <p class="lang-en">
+                    This behaves as a conserved quantity. Dividing this by the constant \(-\epsilon v(m_1+m_2)\) also yields a quantity that behaves as a 
+                    conserved quantity, which is given by the following expression:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    \frac{m_1x^1(t)+m_2x^2(t)}{m_1+m_2}-\frac{m_1\dot{x}^1(t)+m_2\dot{x}^2(t)}{m_1+m_2}t
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    この保存量を\(X_0\)とおいてみます。今、ラグランジアンは空間並進対称性を持っているため、全運動量が保存しそれは重心の速度は\(V_G\)で一定ということを表します。さらに重心の座標を\(X_G(t)\)
+                    とおくと上の式が意味するのは
+                </p>
+                <p class="lang-en">
+                    Let's denote this conserved quantity as \(X_0\). Since the Lagrangian currently has spatial translational symmetry, the total momentum is conserved, which means that the velocity 
+                    of the center of mass, \(V_G\), is constant. Furthermore, if we denote the coordinates of the center of mass as \(X_G(t)\), the above equation implies:
+                </p>
+                <div class="math-block">
+                    \begin{align}
+                    X_G(t)=V_Gt+X_0
+                    \end{align}
+                </div>
+                <p class="lang-ja">
+                    という重心は等速直線運動をするということです。つまりガリレイ変換に対する準不変性は空間並進対称性と合わせることで重心が等速直線運動をするということを
+                    導くことが分かります。
+                </p>
+                <p class="lang-en">
+                    which means that the center of mass undergoes uniform linear motion. In other words, we can see that quasi-invariance with respect to the Galilean transformation, combined with 
+                    spatial translational symmetry, leads to the conclusion that the center of mass moves in uniform linear motion.
+                </p>
+                <h2 class="text-xl font-bold mb-4 border-l-4 border-gray-900 pl-4">
+                    <span class="lang-ja">終わりに</span><span class="lang-en">Conclusion</span>
+                </h2>
+                <p class="lang-ja">
+                    今回の記事では対称性からずれた準不変性について解説しました。準不変性によって条件が緩くなり、具体例で出てきた重心の等速直線運動までも導けること
+                    に感動しました。このpart3までの内容が最初に書きたいと思っていたすべてなのでこの回で粒子系のネーターの定理を締めようと思います。いずれ時間があったら
+                    場の解析力学についてのネーターの定理や、その周辺のことについても書ければと思っているのでぜひ気長にお待ちください。
+                </p>
+                <p class="lang-en">
+                    In this article, we explained quasi-invariance, which deviates from perfect symmetry. I was impressed by the fact that quasi-invariance relaxes the conditions, allowing us to 
+                    even derive the uniform linear motion of the center of mass, as seen in the specific example. The content up to part 3 covers everything I initially wanted to write, so I will 
+                    conclude the discussion of Noether's theorem for particle systems with this installment. If I have time in the future, I hope to write about Noether's theorem in analytical 
+                    mechanics of fields and related topics, so please look forward to it patiently.
+                </p>
+
+        
+    <!-- JavaScript -->
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.getElementById('btn-ja').classList.toggle('lang-btn-active', lang === 'ja');
+            document.getElementById('btn-en').classList.toggle('lang-btn-active', lang === 'en');
+        }
+    </script>
+</body>
+</html>
