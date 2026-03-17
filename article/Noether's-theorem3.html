@@ -116,8 +116,8 @@
                     \end{align}
                 </div>
                 <p class="lang-ja">
-                    ここで両辺を\(t\)である時刻\(t_1\)から\(t_2\)まで積分してみます。この時、左辺の積分はpart1の式(11)の2行目に該当することが分かります。
-                    そしてその積分は式(11)の1行目の等しいわけですから以下の式を得ます。
+                    ここで両辺を\(t\)で、ある時刻\(t_1\)から\(t_2\)まで積分してみます。この時、左辺の積分はpart1の式(11)の2行目に該当することが分かります。
+                    そしてその積分はpart1の式(11)の1行目の等しいわけですから以下の式を得ます。
                 </p>
                 <p class="lang-en">
                     Now, let's integrate both sides with respect to time \(t\) from \(t_1\) to \(t_2\). We can see that the integral on
@@ -160,7 +160,7 @@
                 <p class="lang-ja">
                     そして作用が対称性を持つときpart1の式(16)を得ることによってネーターチャージが保存量となるのでした。実はpart1の式(8)からpart1の式(16)までの議論を
                     注意深く追うと、作用が対称性を持つこととは関係なしにpart1の式(16)の左辺が\(\delta S := S'-S\)という量と等しいことが分かります。したがってもし
-                    作用が対称性を持つとき、\(\delta S\)が0となり、\(\delta S\)と元々等しい式(16)の左辺が0になるのです。このことを念頭に置いて、
+                    作用が対称性を持つとき、\(\delta S\)が0となり、\(\delta S\)と元々等しいpart1の式(16)の左辺が0になるのです。このことを念頭に置いて、
                     作用が対称性を持っていないが(\(\delta S \ne 0\)ということ)以下のような関係式が成り立つような時間の関数\(F(t)\)が存在する場合を考えてみます。
                 </p>
                 <p class="lang-en">
@@ -177,7 +177,7 @@
                     \end{align}
                 </div>
                 <p class="lang-ja">
-                    これが成り立つことを作用が変換に対して準不変であると定義します。ここで、\(\delta S\)はpart1の左辺と等しいので以下の式を得ます。
+                    これが成り立つことを作用が変換に対して準不変であると定義します。ここで、\(\delta S\)はpart1の式(16)の左辺と等しいので以下の式を得ます。
                 </p>
                 <p class="lang-en">
                     When this holds, we define the action to be quasi-invariant under the transformation. Here, since \(\delta S\) is 
@@ -296,51 +296,52 @@
                 <div class="math-block">
                     \begin{align}
                     \delta L(x,\dot{x},t) &= \frac{1}{2}m_1(\dot{x}^1-\epsilon v)^2+\frac{1}{2}m_2(\dot{x}^2-\epsilon v)^2-\frac{1}{2}m_1(\dot{x}^1)^2-\frac{1}{2}m_2(\dot{x}^2)^2\\
-                    &=m_1\epsilon v\dot{x}^1+m_2\epsilon v\dot{x}^2\\
-                    &=\left[\frac{\partial}{\partial x^1}\left(\epsilon m_1vx^1+\epsilon m_2vx^2\right)\right]\dot{x}^1+\left[\frac{\partial}{\partial x^2}\left(\epsilon m_1vx^1+\epsilon m_2vx^2\right)\right]\dot{x}^2
+                    &=-m_1\epsilon v\dot{x}^1-m_2\epsilon v\dot{x}^2\\
+                    &=\left[\frac{\partial}{\partial x^1}\left(-\epsilon m_1vx^1-\epsilon m_2vx^2\right)\right]\dot{x}^1+\left[\frac{\partial}{\partial x^2}\left(-\epsilon m_1vx^1-\epsilon m_2vx^2\right)\right]\dot{x}^2
                    \end{align}
                 </div>
                 <p class="lang-ja">
-                    このように式変形されます。これはラグランジアンがガリレイ変換に対して\(F(x,t)=\epsilon m_1vx^1+\epsilon m_2vx^2\)とするような準不変性があることを意味します。したがって保存量は\(u^1(x,t)=u^2(x,t)=-vt,T(t)=0\)
+                    このように式変形されます。これはラグランジアンがガリレイ変換に対して\(F(x,t)=-\epsilon m_1vx^1-\epsilon m_2vx^2\)とするような準不変性があることを意味します。したがって保存量は\(u^1(x,t)=u^2(x,t)=-vt,T(t)=0\)
                     とした時のネーターチャージから\(F(x(t),t)\)を引いたものであり、計算を実行すると
                 </p>
                 <p class="lang-en">
-                    It is transformed as follows. This means that the Lagrangian has quasi-invariance with respect to the Galilean transformation, where \(F(x,t)=\epsilon m_1vx^1+\epsilon m_2vx^2\). Therefore, 
+                    It is transformed as follows. This means that the Lagrangian has quasi-invariance with respect to the Galilean transformation, where \(F(x,t)=-\epsilon m_1vx^1-\epsilon m_2vx^2\). Therefore, 
                     the conserved quantity is the Noether charge when \(u^1(x,t)=u^2(x,t)=-vt\) and \(T(t)=0\), minus \(F(x(t),t)\). Performing the calculation, we get:
                 </p>
                 <div class="math-block">
                     \begin{align}
-                    {J}(t)-F(x(t),t)&=-m_1\dot{x}^1(t)\epsilon vt-m_2\dot{x}^2(t)\epsilon vt-(\epsilon m_1vx^1+\epsilon m_2vx^2)\\
-                    &=-\epsilon v[m_1x^1(t)+m_2x^2(t)-(m_1\dot{x}^1(t)+m_2\dot{x}^2(t))t]
+                    {J}(t)-F(x(t),t)&=-m_1\dot{x}^1(t)\epsilon vt-m_2\dot{x}^2(t)\epsilon vt-(-\epsilon m_1vx^1(t)-\epsilon m_2vx^2(t))\\
+                    &=\epsilon v[m_1x^1(t)+m_2x^2(t)-(m_1\dot{x}^1(t)+m_2\dot{x}^2(t))t]
                     \end{align}
                 </div>
                 <p class="lang-ja">
-                    これが保存量としてふるまうことになります。ここで定数である\(-\epsilon v(m_1+m_2)\)で割ったものも保存量としてふるまい、それは以下の量となります。
+                    これが保存量としてふるまうことになります。ここで定数である\(\epsilon v(m_1+m_2)\)で割ったものも保存量としてふるまい、それは以下の量となります。
                 </p>
                 <p class="lang-en">
-                    This behaves as a conserved quantity. Dividing this by the constant \(-\epsilon v(m_1+m_2)\) also yields a quantity that behaves as a 
+                    This behaves as a conserved quantity. Dividing this by the constant \(\epsilon v(m_1+m_2)\) also yields a quantity that behaves as a 
                     conserved quantity, which is given by the following expression:
                 </p>
                 <div class="math-block">
                     \begin{align}
-                    \frac{m_1x^1(t)+m_2x^2(t)}{m_1+m_2}-\frac{m_1\dot{x}^1(t)+m_2\dot{x}^2(t)}{m_1+m_2}t
+                    \frac{m_1x^1(t)+m_2x^2(t)}{m_1+m_2}-\frac{m_1\dot{x}^1(t)+m_2\dot{x}^2(t)}{m_1+m_2}t\tag{4}
                     \end{align}
                 </div>
                 <p class="lang-ja">
-                    この保存量を\(X_0\)とおいてみます。今、ラグランジアンは空間並進対称性を持っているため、全運動量が保存しそれは重心の速度は\(V_G\)で一定ということを表します。さらに重心の座標を\(X_G(t)\)
-                    とおくと上の式が意味するのは
+                    この保存量を\(X_0\)とおいてみます。ここで、式(4)の第一項は2粒子の重心座標\(X_G(t)\)を表し、\(t\)係数部分は重心速度\(V_G(t)\)を表していることが分かります。
+                    今、ラグランジアンはpart2の議論から空間並進対称性を持っているため、全運動量が保存しそれは重心の速度が\(V_G(t)=V_0\)で一定であることを表しています。したがって式(4)
+                    から\(X_G(t)\)は以下のように表すことができます。
                 </p>
                 <p class="lang-en">
                     Let's denote this conserved quantity as \(X_0\). Since the Lagrangian currently has spatial translational symmetry, the total momentum is conserved, which means that the velocity 
-                    of the center of mass, \(V_G\), is constant. Furthermore, if we denote the coordinates of the center of mass as \(X_G(t)\), the above equation implies:
+                    of the center of mass, \(V_0\), is constant. Furthermore, if we denote the coordinates of the center of mass as \(X_G(t)\), the above equation implies:
                 </p>
                 <div class="math-block">
                     \begin{align}
-                    X_G(t)=V_Gt+X_0
+                    X_G(t)=V_0t+X_0
                     \end{align}
                 </div>
                 <p class="lang-ja">
-                    という重心は等速直線運動をするということです。つまりガリレイ変換に対する準不変性は空間並進対称性と合わせることで重心が等速直線運動をするということを
+                    この式はまさに重心が等速直線運動することを表しています。つまりガリレイ変換に対する準不変性は空間並進対称性と合わせることで重心が等速直線運動をするということを
                     導くことが分かります。
                 </p>
                 <p class="lang-en">
